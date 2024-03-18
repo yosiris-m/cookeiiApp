@@ -1,0 +1,8 @@
+:root {
+    --color-primary: #BB72DD;
+    --color-secundary: #EBE6E1;
+    --color-third: #EBDBEA;
+    --color-button: rgba(138, 6, 247, 0.747);
+    --color-button-hover: rgba(139, 6, 247, 0.973);
+    --color-but-hover: rgb(48, 134, 81);
+}

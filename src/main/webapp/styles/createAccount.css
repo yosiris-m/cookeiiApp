@@ -1,0 +1,77 @@
+.logo {
+  width: 12rem;
+  height: 10rem;
+
+  @media all and (max-width: 650px) {
+    width: 9rem;
+    height: 5rem;
+  }
+
+  @media all and (min-width: 768px) {
+    width: 10rem;
+    height: 6rem;
+    margin-bottom: 2rem;
+  }
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button-container button {
+  width: 80%;
+}
+
+.button-create {
+  margin-bottom: 1rem;
+  background: var(--color-button);
+  border-radius: 5rem;
+  border: none;
+  height: 2rem;
+  color: aliceblue;
+  cursor: pointer;
+}
+
+.button-create:hover {
+  background: var(--color-button-hover);
+}
+
+.create-account {
+  text-decoration: none;
+  background: rgba(230, 219, 239, 0.43);
+  border-radius: 0.1rem;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.create-account:hover {
+  color: var(--color-but-hover);
+}
+
+.account-l {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.label-box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 2.5rem;
+  background: rgba(230, 219, 239, 0.43);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.349);
+  border-radius: 0.2rem;
+  margin: 1rem 1rem 1rem 1.5rem;
+
+  @media all and (max-width: 650px) {
+    margin: 0.5rem 0 1rem 0;
+  }
+
+  @media all and (min-width: 768px) {
+    height: 2.2rem;
+    margin: 0;
+    margin-bottom: 1.5rem;
+  }
+}
