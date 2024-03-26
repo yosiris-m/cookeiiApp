@@ -1,6 +1,6 @@
 "use strict";
 
-function fetchDetail() {
+function fetchDetail(id) {
   return fetch(`/finalyProject/SvCookDetail?id=${id}`)
     .then((response) => {
       if (!response.ok) {
@@ -9,7 +9,6 @@ function fetchDetail() {
       return response.json();
     })
     .then((data) => {
-      console.log("fetchData---->", data);
       return data;
     })
     .catch((error) => {

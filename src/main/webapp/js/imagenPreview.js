@@ -1,13 +1,13 @@
-const fileSelectButton = document.getElementById("fileSelectButton");
-const fileInput = document.getElementById("fileInput");
-const imgPreview = document.getElementById("imgPreview");
+const photoSelectButton = document.getElementById("fileSelectButton");
+const photoInput = document.getElementById("fileInput");
+const photoPreview = document.getElementById("imgPreview");
 
-fileInput.addEventListener("change", handleFiles, false);
+photoInput.addEventListener("change", handleFiles, false);
 
-fileSelectButton.addEventListener(
+photoSelectButton.addEventListener(
   "click",
   () => {
-    fileInput.click();
+    photoInput.click();
   },
   false
 );
@@ -18,7 +18,7 @@ function handleFiles() {
   if (this.files.length === 0) {
     return;
   }
-  imgPreview.innerHTML = "";
+  photoPreview.innerHTML = "";
 
   const img = document.createElement("img");
   img.src = URL.createObjectURL(this.files[0]);
@@ -27,11 +27,11 @@ function handleFiles() {
     URL.revokeObjectURL(img.src);
   };
 
-  imgPreview.appendChild(img);
+  photoPreview.appendChild(img);
   const info = document.createElement("span");
   info.classList.add("info");
   info.innerHTML = `${this.files[0].name}: ${this.files[0].size} bytes`;
-  imgPreview.appendChild(info);
+  photoPreview.appendChild(info);
 }
 
 

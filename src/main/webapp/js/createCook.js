@@ -17,7 +17,7 @@ function handleSubmitForm(event) {
   const quantity = document.getElementById("quantity").value;
   const timePreparation = document.getElementById("timePreparation").value;
   const author = document.getElementById("author").value;
- // const image = document.getElementById("fileInput").value;
+  const photo = document.getElementById("fileInput").value;
   const state = document.querySelector('input[name="state"]:checked').id;
   const ingredientElements = document.querySelectorAll(
     "#element-Ing .input-focu1"
@@ -37,8 +37,6 @@ function handleSubmitForm(event) {
     return {
       text: text,
       fileName: file ? file.name : null,
-      fileSize: file ? file.size : null,
-      fileType: file ? file.type : null,
     };
   });
   
@@ -47,13 +45,13 @@ function handleSubmitForm(event) {
     quantity: quantity,
     timePreparation: timePreparation,
     author: author,
-    image: image,
+    photo: photo,
     state: state,
     ingredient: ingredient,
     preparations: preparations 
   }
 
-fetch(servletUrl, {
+fetch("/finalyProject/SvCooks", {
   method: 'POST',
   credentials: 'include',
   headers: {
@@ -80,8 +78,8 @@ fetch(servletUrl, {
     timePreparation,
     "autor;",
     author,
-   // "imagen principal:",
-   // image,
+   "imagen principal:",
+    photo,
     "stado:",
     state,
     "ingrediente:",

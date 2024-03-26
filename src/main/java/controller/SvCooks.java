@@ -52,7 +52,6 @@ public class SvCooks extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		// url http://localhost:8080/finalyProject/SvCooks
 		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
 		Gson gson = new Gson();
@@ -84,14 +83,15 @@ public class SvCooks extends HttpServlet {
 			throws ServletException, IOException {
 
 		String applicationPath = request.getServletContext().getRealPath("");
-		System.out.println("*** applicationPath -> " + applicationPath);
+		// System.out.println("*** applicationPath -> " + applicationPath);
 		String uploadPath = applicationPath + File.separator + "recipe_photo"; // Directorio para guardar las imágenes
 
 		File uploadDir = new File(uploadPath);
-		if (!uploadDir.exists()) {
-			System.out.println("*** El directorio de las imagenes no existe, lo creamos");
-			uploadDir.mkdir(); // Crea el directorio si no existe
-		}
+		/*
+		 * if (!uploadDir.exists()) {
+		 * System.out.println("*** El directorio de las imagenes no existe, lo creamos"
+		 * ); uploadDir.mkdir(); // Crea el directorio si no existe }
+		 */
 
 		String title = request.getParameter("title");
 		int quantity = Integer.parseInt(request.getParameter("quantity"));
@@ -104,30 +104,27 @@ public class SvCooks extends HttpServlet {
 
 		// Leo los datos de la foto que me envian en el formulario
 		Part part = request.getPart("file");
-		Part partFilePrep = request.getPart("ingre-file");
+		// Part partFilePrep = request.getPart("ingre-file");
 		// Me da el nombre del archivo origen
 		Path path = Paths.get(part.getSubmittedFileName());
 
-		Path pathPrep = Paths.get(partFilePrep.getSubmittedFileName());
+		// Path pathPrep = Paths.get(partFilePrep.getSubmittedFileName());
 		// crea un objeto de la foto para añadirla a listado
 		String fileName = file.uploadFile(part, path, uploadDir, response);
 
-		Preparation filePre = new Preparation();
+		//Preparation filePre = new Preparation();
 		// TODO: No llamar a esto si no nos llega imagen de preparacion: mirar esto:
 		// partFilePrep.getSubmittedFileName()
-		System.out.println("**** partFilePrep.getSubmittedFileName() -> " + partFilePrep.getSubmittedFileName());
-		String filePreparation = "";
-		if (partFilePrep.getSubmittedFileName() != "") {
-			filePreparation = filePre.uploadFilePrep(partFilePrep, pathPrep, uploadDir, response);
-		}
-
+		/*
+		 * String filePreparation = ""; if (partFilePrep.getSubmittedFileName() != "") {
+		 * filePreparation = filePre.uploadFilePrep(partFilePrep, pathPrep, uploadDir,
+		 * response); }
+		 */
 		List<Preparation> preparations = new ArrayList<>();
-		
+
 		for (String preparation : preparationL) {
-			preparations.add(new Preparation(preparation, filePreparation));
+			preparations.add(new Preparation(preparation));
 		}
-		
-		
 
 		List<Ingredient> ingredients = new ArrayList<>();
 		for (String ingredient : ingredientL) {
@@ -135,6 +132,8 @@ public class SvCooks extends HttpServlet {
 		}
 		System.out.println(preparations);
 		CookList cookList = new CookList();
+
+		System.out.println("datos guardados" + cookList);
 		cookList.addCook(
 				new Cook(title, quantity, timePreparation, author, fileName, state, ingredients, preparations));
 

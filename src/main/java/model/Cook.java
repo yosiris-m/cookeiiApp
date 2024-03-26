@@ -70,9 +70,6 @@ public class Cook {
 		InputStream input = part.getInputStream();
 		// Concateno el tiempo con la imagen subida y asi optengo un nombre unico
 		
-		
-		// fileName = "dasdsds.png"
-		
 		String extension = StringUtil.obtenerExtension(fileName);
 		
 		String newName = new Date().getTime()+ "." + extension;

@@ -9,7 +9,6 @@ function fetchData() {
       return response.json();
     })
     .then((data) => {
-      console.log("fetchData---->", data);
       return data;
     })
     .catch((error) => {

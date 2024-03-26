@@ -1,17 +1,13 @@
 "use strict";
 
-
-
 /**detail */
 function detail(data) {
 	const selectedItem = data
 	const detailCard = document.getElementById("detail-l");
-	console.log("selectedItem", selectedItem)
-	console.log("selectedItem ingredient", selectedItem.title)
-	// selectedItem.state == "remision" ? selectedItem.state = "Remisión" : null;
-	// selectedItem.state == "brote leve moderado" ? selectedItem.state = "Brote leve-moderado" : null;
-	// selectedItem.state == "brote" ? selectedItem.state = "Brote" : null;
-
+	selectedItem.state === "remision" ? selectedItem.state = "Remisión" : null;
+	selectedItem.state === "brote leve moderado" ? selectedItem.state = "Brote leve-moderado" : null;
+	selectedItem.state === "brote" ? selectedItem.state = "Brote" : null;
+	console.log("detail", data)
 	const liCard = document.createElement("section");
 	liCard.classList.add("list-detail");
 	liCard.dataset.id = selectedItem.id;
@@ -59,20 +55,20 @@ function detail(data) {
         <h3 class="mg-lef-M title-ing-prep">Ingredientes</h3>
         <ul class="list-d">
           ${selectedItem.ingredients ? selectedItem.ingredients.map((stepIng) =>
-		`<li class="list-ingredient">
+		     `<li class="list-ingredient">
 			   <i class="fa fa-check icon-check "></i>
 			    ${stepIng.ingredient}
-			</li>`
-	).join("") : ''}
-          </ul>
+			 </li>`
+	      ).join("") : ''}
+        </ul>
         </div> 
-    <div class="box-preparation">
+      <div class="box-preparation">
         <h3 class="mg-lef-M title-ing-prep">Preparación</h3>  
         <ol class="list-ol">
          ${selectedItem.preparations ? selectedItem.preparations.map((step) =>
-		`<li>
+		   `<li>
               <p>${step.preparation}</p>
-              ${step.img ? `<img class="img-preparation" src="${step.img}" alt="Imagen de la preparación">` : ""} </li>`)
+            </li>`)
 			.join("") : ''}
           </ol>
         </div>  
@@ -83,27 +79,9 @@ function detail(data) {
 	const deleteButton = liCard.querySelector(".delete");
 
 	editButton.onclick = function() {
-		const urlParams = new URLSearchParams();
+		const urlParams = new URLSearchParams(window.location.search);
+		window.location.href = `./createCook.html?id=${urlParams.get("id")}`;
 
-		for (let valueKey in selectedItem) {
-			const value = valueKey === 'preparations' && Array.isArray(selectedItem[valueKey])
-				? JSON.stringify(selectedItem[valueKey])
-				: selectedItem[valueKey];
-
-			urlParams.set(valueKey, value);
-		}
-		const queryString = urlParams.toString();
-		window.location.href = `./createCook.html?${queryString}`;
-		updateCook(
-			selectedItem.title,
-			selectedItem.cuantity,
-			selectedItem.timePreparation,
-			selectedItem.state,
-			selectedItem.author,
-			selectedItem.image,
-			selectedItem.ingredients,
-			selectedItem.preparations
-		);
 	};
 
 	deleteButton.onclick = function() {
@@ -112,16 +90,13 @@ function detail(data) {
 
 	detailCard.appendChild(liCard);
 }
-
-
 const urlParams = new URLSearchParams(window.location.search);
+
 const id = Number.parseInt(urlParams.get("id"));
 
-console.log(id)
 fetchDetail(id)
 	.then(data => {
-		console.log("data render", data);
-		detail(data); // Llamada a la función detail con los datos obtenidos
+		detail(data); // Llamada a la función detail y le paso los datos
 	})
 	.catch(error => {
 		console.error('Error al obtener los datos del detalle:', error);

@@ -300,7 +300,7 @@ function cookSearch() {
     </button>
   `;
 
-  searchContainer.appendChild(search);
+	if(searchContainer) searchContainer.appendChild(search);
 }
 
 cookSearch();
@@ -317,7 +317,7 @@ function listCard() {
 
   `;
 
-  headCard.appendChild(list);
+  if(headCard) headCard.appendChild(list);
 }
 
 listCard();

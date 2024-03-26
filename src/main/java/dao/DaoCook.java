@@ -91,12 +91,12 @@ public class DaoCook {
 	}
 
 	private void insertPreparation(long recipe_id, Preparation preparation) throws SQLException {
-		String insertPreparationQuery = "INSERT INTO preparations (fk_recipe_id, preparation, img) VALUES (?,?,?)";
+		String insertPreparationQuery = "INSERT INTO preparations (fk_recipe_id, preparation) VALUES (?,?)";
 		try (PreparedStatement prepStatement = con.prepareStatement(insertPreparationQuery,
 				Statement.RETURN_GENERATED_KEYS)) {
 			prepStatement.setLong(1, recipe_id);
 			prepStatement.setString(2, preparation.getPreparation());
-			prepStatement.setString(3, preparation.getImg());
+			//prepStatement.setString(3, preparation.getImg());
 			prepStatement.execute();
 
 		}
@@ -190,7 +190,7 @@ public class DaoCook {
 					if (preparation != null) {
 						preparation.setId(resultSetPreparation.getInt("preparation_id"));
 						preparation.setPreparation(resultSetPreparation.getString("preparation"));
-						preparation.setImg(resultSetPreparation.getString("img"));
+						//preparation.setImg(resultSetPreparation.getString("img"));
 					}
 					
 					System.out.println(preparation);

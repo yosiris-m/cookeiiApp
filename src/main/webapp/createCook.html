@@ -16,16 +16,16 @@
 
 <body>
 	<header id="header" class="container-header-create">
-		<a class="link-back" href="./index.html">
-			<i class="fa-solid fa-caret-left fa-lg"></i></a>
-
+	   <a class="link-back" href="./index.html">
+		  <i class="fa-solid fa-caret-left fa-lg"></i>
+	   </a>
 		<img class="logo" src="./images/logo.png" alt="logo" />
 	</header>
 	<main class="main-create">
 		<form method="post" action="/finalyProject/SvCooks" class="form" enctype="multipart/form-data">
-			<input type="hidden" name="recipe_id" id="createteId" value="">
+			<input type="hidden" id="createteId">
 			<input type="hidden" name="recipe_id" id="updateId" value="">
-			<!-- <div class="head-title" id="title-createC"></div> -->
+			<div class="head-title" id="title-createC"></div>
 			<fieldset class="head-create">
 				<div class="box-create">
 					<label class="titles-create" for="title">Título</label>
@@ -67,10 +67,14 @@
 					<label for="Remision">
 						<input type="radio" name="state" id="Remision" value="remision" required>
 						Remisión</label>
-					<label for="brote">
+					<label for="brote leve moderado">
 						<input type="radio" name="state" id="slightModerate" value="brote leve moderado" required>
 						Brote leve-moderado
 					</label>
+					<label for="brote moderado">
+						<input type="radio" name="state" id="moderate" value="brote moderado" required>
+						Brote moderado
+					</label>	
 					<label for="outbreak">
 						<input type="radio" name="state" id="outbreak" value="brote" required>
 						Brote
@@ -88,17 +92,14 @@
 				<button type="button" class="buttons" onclick="addNewPreparation()">+ Pasos</button>
 			</fieldset>
 			<input type="submit" class="buttons send-button" value="Publicar">
-			<!-- <button type="button" class="buttons send-button" onclick="handleSubmitForm(event)">Enviar</button>-->
 		</form>
 	</main>
-
-	<script src="./js/updateCook.js"></script>
-	<script src="./js/showDataCook.js"></script>
-	<script src="./js/detail-j.js"></script>
+	<script src="./js/fetchDetail.js"></script>
+	<script src="./js/showDataCook.js"></script>	
 	<script src="./js/createCoookForm.js"></script>
 	<script src="./js/imagenPreview.js"></script>
 	<script src="./js/createCook.js"></script>
-
+	<script src="./js/updateCook.js"></script>
 </body>
 
 </html>
