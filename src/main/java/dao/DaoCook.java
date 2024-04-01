@@ -28,6 +28,7 @@ public class DaoCook {
 
 	}
 
+	// function insertar
 	public void insertCookTable(Cook cook) throws SQLException {
 		if (cook.getIngredient() == null) {
 			throw new IllegalArgumentException("La lista de ingredientes del Cook es null");
@@ -65,6 +66,7 @@ public class DaoCook {
 		}
 	}
 
+	// function insertar ingredientes
 	private void insertIngredient(long recipe_id, Ingredient ingredient) throws SQLException {
 		String insertIngredientQuery = "INSERT INTO ingredients (fk_recipe_id, ingredient) VALUES (?, ?)";
 		try (PreparedStatement prepStatement = con.prepareStatement(insertIngredientQuery,
@@ -73,35 +75,23 @@ public class DaoCook {
 			prepStatement.setString(2, ingredient.getIngredient());
 			prepStatement.execute();
 
-			/*
-			 * ResultSet generatedKeys = prepStatement.getGeneratedKeys(); long
-			 * ingredientId; if (generatedKeys.next()) { ingredientId =
-			 * generatedKeys.getLong(1); } else { throw new
-			 * SQLException("Failed to retrieve generated ingredient_id"); }
-			 * 
-			 * // Insertar en la tabla de relación cook_ingredient String
-			 * insertRelationQuery =
-			 * "INSERT INTO recipe_ingredient (recipe_id, ingredient_id) VALUES (?, ?)"; try
-			 * (PreparedStatement relationStatement =
-			 * con.prepareStatement(insertRelationQuery)) { relationStatement.setLong(1,
-			 * recipe_id); relationStatement.setLong(2, ingredientId);
-			 * relationStatement.executeUpdate(); }
-			 */
 		}
 	}
 
+	// function insertar preparaciones
 	private void insertPreparation(long recipe_id, Preparation preparation) throws SQLException {
 		String insertPreparationQuery = "INSERT INTO preparations (fk_recipe_id, preparation) VALUES (?,?)";
 		try (PreparedStatement prepStatement = con.prepareStatement(insertPreparationQuery,
 				Statement.RETURN_GENERATED_KEYS)) {
 			prepStatement.setLong(1, recipe_id);
 			prepStatement.setString(2, preparation.getPreparation());
-			//prepStatement.setString(3, preparation.getImg());
+			// prepStatement.setString(3, preparation.getImg());
 			prepStatement.execute();
 
 		}
 	}
 
+	// function listar ingredientes
 	public List<Cook> getCookList() throws SQLException {
 		List<Cook> result = new ArrayList<Cook>();
 
@@ -136,6 +126,47 @@ public class DaoCook {
 		return result;
 	}
 
+	// function actualizar receta
+	public void updateCookTable(Cook cook) throws SQLException {
+
+		String updateCookQuery = "UPDATE cooks SET title=?, quantity=?, timePreparation=?, author=?, photo=?, state=? WHERE id=?";
+		try (PreparedStatement cookUpdate = con.prepareStatement(updateCookQuery, Statement.RETURN_GENERATED_KEYS)) {
+
+			cookUpdate.setString(1, cook.getTitle());
+			cookUpdate.setInt(2, cook.getQuantity());
+			cookUpdate.setString(3, cook.getTimePreparation());
+			cookUpdate.setString(4, cook.getAuthor());
+			cookUpdate.setString(5, cook.getPhoto());
+			cookUpdate.setString(6, cook.getState());
+
+			cookUpdate.setInt(7, cook.getId());
+
+			int cookIsUpdate = cookUpdate.executeUpdate();
+			if (cookIsUpdate > 0) {
+				// Elimina los ingredientes que existen en la BD
+				this.deleteIngredients(cook.getId());
+				// Insertar nuevos ingredientes
+				for (Ingredient ingredient : cook.getIngredient()) {
+					insertIngredient(cook.getId(), ingredient);
+				}
+
+				// Elimina las preparaciones que existen en la BD
+				this.deletePreparations(cook.getId());
+				// Inserta las nuevas preparaciones
+				for (Preparation preparation : cook.getPreparation()) {
+					insertPreparation(cook.getId(), preparation);
+				}
+				System.out.println("Se ha actualizado la receta con exito." + cook.getId());
+
+			} else {
+				System.out.println("No se pudo actualizar la receta." + cook.getId());
+			}
+
+		}
+
+	}
+
+	// function trae los detalles de una receta
 	public Cook getCookDetails(long recipeId) throws SQLException {
 		Cook cook = new Cook();
 
@@ -166,7 +197,6 @@ public class DaoCook {
 
 				}
 			}
-             //http://localhost:8080/finalyProject/SvCookDetail?id=14
 			// Consulta para los ingredientes
 			preparedStatementIngrd.setLong(1, recipeId);
 			try (ResultSet resultSetIngredients = preparedStatementIngrd.executeQuery()) {
@@ -177,7 +207,8 @@ public class DaoCook {
 						ingredient.setId(resultSetIngredients.getInt("ingredient_id"));
 						ingredient.setIngredient(resultSetIngredients.getString("ingredient"));
 					}
-					cook.getIngredient().add(ingredient); // Agregar el objeto Ingredient a la lista en Cook
+					// Agregar el objeto Ingredient a la lista en Cook
+					cook.getIngredient().add(ingredient);
 				}
 			}
 
@@ -186,14 +217,12 @@ public class DaoCook {
 			try (ResultSet resultSetPreparation = preparedStatementPrep.executeQuery()) {
 				while (resultSetPreparation.next()) {
 					Preparation preparation = new Preparation();
-					
+
 					if (preparation != null) {
 						preparation.setId(resultSetPreparation.getInt("preparation_id"));
 						preparation.setPreparation(resultSetPreparation.getString("preparation"));
-						//preparation.setImg(resultSetPreparation.getString("img"));
 					}
-					
-					System.out.println(preparation);
+
 					cook.getPreparation().add(preparation);
 				}
 
@@ -206,4 +235,45 @@ public class DaoCook {
 		return cook;
 
 	}
+
+	// function elimina la receta selecionada
+	public void deleteCook(int recipe_id) throws SQLException {
+		//DELETE FROM cooks WHERE id = 1;
+		String deleteCookQuery = "DELETE FROM cooks WHERE id = ?";
+         
+		try (PreparedStatement cookDeleted = con.prepareStatement(deleteCookQuery)) {
+            this.deleteIngredients(recipe_id);
+            this.deletePreparations(recipe_id);
+            cookDeleted.setInt(1, recipe_id);
+
+            cookDeleted.executeUpdate();
+
+		}
+	}
+
+	// function elimina los ingredientes para luego ser insertados
+	public void deleteIngredients(int recipe_id) throws SQLException {
+		String deleteIngredientQuery = "DELETE FROM ingredients WHERE fk_recipe_id = ?";
+
+		try (PreparedStatement ingredienDelete = con.prepareStatement(deleteIngredientQuery)) {
+
+			ingredienDelete.setInt(1, recipe_id);
+
+			ingredienDelete.executeUpdate();
+		}
+	}
+
+	// function elimina las preparaciones para luegoser insertadas
+	public void deletePreparations(int recipe_id) throws SQLException {
+		String deletePreparationQuery = "DELETE FROM preparations WHERE fk_recipe_id = ?";
+
+		try (PreparedStatement preparationDelete = con.prepareStatement(deletePreparationQuery)) {
+
+			preparationDelete.setInt(1, recipe_id);
+
+			preparationDelete.executeUpdate();
+
+		}
+	}
+
 }

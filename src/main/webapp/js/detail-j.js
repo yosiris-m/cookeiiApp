@@ -1,4 +1,19 @@
 "use strict";
+function onDeleteButtonClick(id) {
+	fetch(`/finalyProject/SVDelete?id=${id}`, {
+		method: 'DELETE'
+	})
+		.then(response => {
+			if (response.ok) {
+				// ir a la página principal
+				window.location.href = './index.html';
+			}
+
+		})
+		.catch(error => {
+			console.error('No se pudo eliminar la receta:', error);
+		});
+}
 
 /**detail */
 function detail(data) {
@@ -6,6 +21,7 @@ function detail(data) {
 	const detailCard = document.getElementById("detail-l");
 	selectedItem.state === "remision" ? selectedItem.state = "Remisión" : null;
 	selectedItem.state === "brote leve moderado" ? selectedItem.state = "Brote leve-moderado" : null;
+	selectedItem.state === "brote leve moderado" ? selectedItem.state = "Brote moderado" : null;
 	selectedItem.state === "brote" ? selectedItem.state = "Brote" : null;
 	console.log("detail", data)
 	const liCard = document.createElement("section");
@@ -48,25 +64,25 @@ function detail(data) {
       </div> 
       <div class="box-butts">
       <button class="button-wit edit icon-size" id="edit"><i class="fa-regular fa-pen-to-square"></i></button>
-      <button class="button-wit  delete icon-size" id="delete"><i class="fa-regular fa-trash-can"></i></button>
+      <button class="button-wit  delete icon-size" id="delete" onclick="onDeleteButtonClick(${selectedItem.id})"><i class="fa-regular fa-trash-can"></i></button>
     </div>
     <article class="box-ingredient-preparation patrick-hand-regular"> 
       <div class="ingredient">
         <h3 class="mg-lef-M title-ing-prep">Ingredientes</h3>
         <ul class="list-d">
           ${selectedItem.ingredients ? selectedItem.ingredients.map((stepIng) =>
-		     `<li class="list-ingredient">
+		`<li class="list-ingredient">
 			   <i class="fa fa-check icon-check "></i>
 			    ${stepIng.ingredient}
 			 </li>`
-	      ).join("") : ''}
+	).join("") : ''}
         </ul>
         </div> 
       <div class="box-preparation">
         <h3 class="mg-lef-M title-ing-prep">Preparación</h3>  
         <ol class="list-ol">
          ${selectedItem.preparations ? selectedItem.preparations.map((step) =>
-		   `<li>
+		`<li>
               <p>${step.preparation}</p>
             </li>`)
 			.join("") : ''}
@@ -76,17 +92,18 @@ function detail(data) {
     `;
 
 	const editButton = liCard.querySelector(".edit");
-	const deleteButton = liCard.querySelector(".delete");
+	/* const deleteButton = liCard.querySelector(".delete");
+  deleteButton.onclick = onDeleteButtonClick(selectedItem.id);*/
 
 	editButton.onclick = function() {
 		const urlParams = new URLSearchParams(window.location.search);
-		window.location.href = `./createCook.html?id=${urlParams.get("id")}`;
+		window.location.href = `./updateCook.html?id=${urlParams.get("id")}`;
 
 	};
 
-	deleteButton.onclick = function() {
+	/*deleteButton.onclick = function() {
 		console.log("eliminar");
-	};
+	};*/
 
 	detailCard.appendChild(liCard);
 }

@@ -1,7 +1,7 @@
 "use strict";
 
 function fetchDetail(id) {
-  return fetch(`/finalyProject/SvCookDetail?id=${id}`)
+  return fetch(`/finalyProject/SvCooksDetaill?id=${id}`)
     .then((response) => {
       if (!response.ok) {
         throw new Error("No se pudo obtener la respuesta de la API");

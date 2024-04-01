@@ -33,6 +33,8 @@ public class Cook {
 		this.ingredients = new ArrayList<>();
 		// Inicializa la lista en el constructor
 	}
+	
+
 
 	public Cook(String title, int quantity, String timePreparation, String author, String photo, String state,
 			List<Ingredient> ingredient, List<Preparation> preparation) {

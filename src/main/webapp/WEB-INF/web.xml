@@ -21,12 +21,32 @@
   </welcome-file-list>
   <servlet>
     <description></description>
-    <display-name>SvCookDetail</display-name>
-    <servlet-name>SvCookDetail</servlet-name>
-    <servlet-class>dao.SvCookDetail</servlet-class>
+    <display-name>SvCooksDetaill</display-name>
+    <servlet-name>SvCooksDetaill</servlet-name>
+    <servlet-class>controller.SvCooksDetaill</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>SvCookDetail</servlet-name>
-    <url-pattern>/SvCookDetail</url-pattern>
+    <servlet-name>SvCooksDetaill</servlet-name>
+    <url-pattern>/SvCooksDetaill</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SvUpdate</display-name>
+    <servlet-name>SvUpdate</servlet-name>
+    <servlet-class>controller.SvUpdate</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SvUpdate</servlet-name>
+    <url-pattern>/SvUpdate</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SVDelete</display-name>
+    <servlet-name>SVDelete</servlet-name>
+    <servlet-class>controller.SVDelete</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SVDelete</servlet-name>
+    <url-pattern>/SVDelete</url-pattern>
   </servlet-mapping>
 </web-app>

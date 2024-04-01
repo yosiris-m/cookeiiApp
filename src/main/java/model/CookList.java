@@ -37,7 +37,7 @@ public class CookList {
 			dao.insertCookTable(cook);
 		}
 	}
-    
+
 	public List<Cook> getCooks() {
 		return cooks;
 	}

@@ -87,11 +87,11 @@ public class SvCooks extends HttpServlet {
 		String uploadPath = applicationPath + File.separator + "recipe_photo"; // Directorio para guardar las imágenes
 
 		File uploadDir = new File(uploadPath);
-		/*
-		 * if (!uploadDir.exists()) {
-		 * System.out.println("*** El directorio de las imagenes no existe, lo creamos"
-		 * ); uploadDir.mkdir(); // Crea el directorio si no existe }
-		 */
+		
+		  if (!uploadDir.exists()) {
+		  //System.out.println(" El directorio de las imagenes no existe, lo creamos";
+		  uploadDir.mkdir(); // Crea el directorio si no existe }
+		  }
 
 		String title = request.getParameter("title");
 		int quantity = Integer.parseInt(request.getParameter("quantity"));
@@ -104,24 +104,11 @@ public class SvCooks extends HttpServlet {
 
 		// Leo los datos de la foto que me envian en el formulario
 		Part part = request.getPart("file");
-		// Part partFilePrep = request.getPart("ingre-file");
-		// Me da el nombre del archivo origen
 		Path path = Paths.get(part.getSubmittedFileName());
-
-		// Path pathPrep = Paths.get(partFilePrep.getSubmittedFileName());
 		// crea un objeto de la foto para añadirla a listado
 		String fileName = file.uploadFile(part, path, uploadDir, response);
-
-		//Preparation filePre = new Preparation();
-		// TODO: No llamar a esto si no nos llega imagen de preparacion: mirar esto:
-		// partFilePrep.getSubmittedFileName()
-		/*
-		 * String filePreparation = ""; if (partFilePrep.getSubmittedFileName() != "") {
-		 * filePreparation = filePre.uploadFilePrep(partFilePrep, pathPrep, uploadDir,
-		 * response); }
-		 */
+		
 		List<Preparation> preparations = new ArrayList<>();
-
 		for (String preparation : preparationL) {
 			preparations.add(new Preparation(preparation));
 		}
@@ -130,10 +117,7 @@ public class SvCooks extends HttpServlet {
 		for (String ingredient : ingredientL) {
 			ingredients.add(new Ingredient(ingredient));
 		}
-		System.out.println(preparations);
 		CookList cookList = new CookList();
-
-		System.out.println("datos guardados" + cookList);
 		cookList.addCook(
 				new Cook(title, quantity, timePreparation, author, fileName, state, ingredients, preparations));
 
