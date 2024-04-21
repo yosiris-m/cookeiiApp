@@ -11,10 +11,11 @@ import java.util.List;
 import model.Cook;
 import model.Ingredient;
 import model.Preparation;
+import model.User;
 
 public class DaoCook {
 
-	public static Connection con = null;
+	public Connection con = null;
 
 	public DaoCook() throws SQLException {
 		try {
@@ -29,17 +30,17 @@ public class DaoCook {
 	}
 
 	// function insertar
-	public void insertCookTable(Cook cook) throws SQLException {
+	public void insertCookTable(Cook cook, int userId) throws SQLException {
 		if (cook.getIngredient() == null) {
 			throw new IllegalArgumentException("La lista de ingredientes del Cook es null");
 		}
-		String insertCookQuery = "INSERT INTO cooks (title, quantity, timePreparation, author, photo, state) VALUES (?,?,?,?,?,?)";
+		String insertCookQuery = "INSERT INTO cooks (title, quantity, timePreparation, fk_user_id, photo, state) VALUES (?,?,?,?,?,?)";
 
 		try (PreparedStatement cookInsert = con.prepareStatement(insertCookQuery, Statement.RETURN_GENERATED_KEYS)) {
 			cookInsert.setString(1, cook.getTitle());
 			cookInsert.setInt(2, cook.getQuantity());
 			cookInsert.setString(3, cook.getTimePreparation());
-			cookInsert.setString(4, cook.getAuthor());
+			cookInsert.setInt(4, userId);
 			cookInsert.setString(5, cook.getPhoto());
 			cookInsert.setString(6, cook.getState());
 
@@ -63,7 +64,7 @@ public class DaoCook {
 			for (Preparation preparation : cook.getPreparation()) {
 				insertPreparation(cookId, preparation);
 			}
-		}
+		} 
 	}
 
 	// function insertar ingredientes
@@ -94,10 +95,11 @@ public class DaoCook {
 	// function listar ingredientes
 	public List<Cook> getCookList() throws SQLException {
 		List<Cook> result = new ArrayList<Cook>();
+		//int userId;
 
 		// Consulta SQL para seleccionar los datos que deseas recuperar
 
-		String query = "SELECT id, title, quantity, timePreparation, author, photo, state FROM cooks ";
+		String query = "SELECT c.id, title, quantity, timePreparation, u.user_name AS author, photo, state FROM cooks c INNER JOIN users u ON c.fk_user_id = u.id";
 		try {
 
 			// Prepara la sentencia SQL
@@ -115,9 +117,13 @@ public class DaoCook {
 				cook.setAuthor(resultSet.getString("author"));
 				cook.setPhoto(resultSet.getString("photo"));
 				cook.setState(resultSet.getString("state"));
-
+				//cook.setAuthorId(resultSet.getInt("autor_id"));;
+				System.out.println("cook id"+ cook.getId());
+				//System.out.println("autor_id"+ cook.getAuthorId());
+	
 				result.add(cook);
 			}
+			System.out.println("result"+ result);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -129,17 +135,16 @@ public class DaoCook {
 	// function actualizar receta
 	public void updateCookTable(Cook cook) throws SQLException {
 
-		String updateCookQuery = "UPDATE cooks SET title=?, quantity=?, timePreparation=?, author=?, photo=?, state=? WHERE id=?";
+		String updateCookQuery = "UPDATE cooks SET title=?, quantity=?, timePreparation=?, photo=?, state=? WHERE id=?";
 		try (PreparedStatement cookUpdate = con.prepareStatement(updateCookQuery, Statement.RETURN_GENERATED_KEYS)) {
-
+            // Establecer los valores de los parametros de la query o consulta
 			cookUpdate.setString(1, cook.getTitle());
 			cookUpdate.setInt(2, cook.getQuantity());
 			cookUpdate.setString(3, cook.getTimePreparation());
-			cookUpdate.setString(4, cook.getAuthor());
-			cookUpdate.setString(5, cook.getPhoto());
-			cookUpdate.setString(6, cook.getState());
+			cookUpdate.setString(4, cook.getPhoto());
+			cookUpdate.setString(5, cook.getState());
 
-			cookUpdate.setInt(7, cook.getId());
+			cookUpdate.setInt(6, cook.getId());
 
 			int cookIsUpdate = cookUpdate.executeUpdate();
 			if (cookIsUpdate > 0) {
@@ -171,8 +176,7 @@ public class DaoCook {
 		Cook cook = new Cook();
 
 		// Consulta SQL para seleccionar los datos que deseas recuperar
-
-		String query = "SELECT id, title, quantity, timePreparation, author, photo, state FROM cooks WHERE id = ? ";
+		String query = "SELECT c.id, title, quantity, timePreparation,u.user_name AS author,u.id AS authorId, photo, state FROM cooks c INNER JOIN users u ON c.fk_user_id = u.id  WHERE c.id = ? ";
 		String queryIngredients = "SELECT * FROM ingredients WHERE fk_recipe_id = ? ";
 		String queryPreparations = "SELECT * FROM preparations WHERE fk_recipe_id = ? ";
 		try {
@@ -185,16 +189,16 @@ public class DaoCook {
 			// Consulta para los detalles del cocinero
 			preparedStatement.setLong(1, recipeId);
 			try (ResultSet resultSetCook = preparedStatement.executeQuery()) {
-
+                
 				while (resultSetCook.next()) {
 					cook.setId(resultSetCook.getInt("id"));
 					cook.setTitle(resultSetCook.getString("title"));
 					cook.setQuantity(resultSetCook.getInt("quantity"));
 					cook.setTimePreparation(resultSetCook.getString("timePreparation"));
 					cook.setAuthor(resultSetCook.getString("author"));
+					cook.setAuthorId(resultSetCook.getInt("authorId"));
 					cook.setPhoto(resultSetCook.getString("photo"));
 					cook.setState(resultSetCook.getString("state"));
-
 				}
 			}
 			// Consulta para los ingredientes
@@ -236,21 +240,7 @@ public class DaoCook {
 
 	}
 
-	// function elimina la receta selecionada
-	public void deleteCook(int recipe_id) throws SQLException {
-		//DELETE FROM cooks WHERE id = 1;
-		String deleteCookQuery = "DELETE FROM cooks WHERE id = ?";
-         
-		try (PreparedStatement cookDeleted = con.prepareStatement(deleteCookQuery)) {
-            this.deleteIngredients(recipe_id);
-            this.deletePreparations(recipe_id);
-            cookDeleted.setInt(1, recipe_id);
-
-            cookDeleted.executeUpdate();
-
-		}
-	}
-
+	
 	// function elimina los ingredientes para luego ser insertados
 	public void deleteIngredients(int recipe_id) throws SQLException {
 		String deleteIngredientQuery = "DELETE FROM ingredients WHERE fk_recipe_id = ?";

@@ -1,24 +1,16 @@
 package controller;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
+import jakarta.servlet.http.HttpSession;
 import model.Cook;
-import model.CookList;
-import model.Ingredient;
-import model.Preparation;
+import model.User;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.google.gson.Gson;
 
@@ -30,32 +22,45 @@ import dao.DaoCook;
 
 public class SvCooksDetaill extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public SvCooksDetaill() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		 String parameterValue = request.getParameter("id");
-		//System.out.println("parametroValor: " + parametroValor);
-		 
+	public SvCooksDetaill() {
+		super();
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		String parameterValue = request.getParameter("id");
+
+		
+
 		long cookId = Long.parseLong(parameterValue);
-		//System.out.println("cookId "+ cookId );
 		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
 		Gson gson = new Gson();
 
 		try {
-			// Llama al método getDataCook y le paso el objeto PrintWriter
-			Cook cook = new DaoCook().getCookDetails(cookId);
+			DaoCook dao = new DaoCook();
+			Cook cook = dao.getCookDetails(cookId);
+
+			
+			// Calcular si la receta es del usuario en sesión
+			HttpSession session = request.getSession();
+			User user = (User) session.getAttribute("user");
+			boolean isOwner = false;
+			if (user != null) {
+				isOwner = cook.getAuthorId() == user.getId();
+			}
+			cook.setIsOwner(isOwner);
+
+			System.out.println("detail cook" + cook);
 
 			// Convierte el objeto Java en formato JSON usando Gson
 			String json = gson.toJson(cook);
@@ -69,15 +74,7 @@ public class SvCooksDetaill extends HttpServlet {
 			// Cierra el PrintWriter
 			out.close();
 		}
-		
-	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
-
 
 }

@@ -1,53 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CookeII</title>
-    <link rel="icon" href="../../images/favico.ico" />
-    <link rel="stylesheet" href="./styles/createAccount.css" />
-    <link rel="stylesheet" href="./styles/login.css" />
-    <script src="https://kit.fontawesome.com/a22a8f4330.js" crossorigin="anonymous"></script>
-  </head>
-  <body class="body-login">
-    <header class="go-back">
-      <p>Welcome to CookeII create account</p>
-      <a class="link-back" href="./index.html">Inicio</a>
-    </header>
-    <main class="container-form">
-      <img class="logo" src="./images/logo2.png" alt="logo" />
-      <form class="form" action="" method="post">
-        <label for="" class="label-box">
-          <i class="fa-solid fa-user icons"></i>
-          <span class="vertical-line"></span>
-          <input class="iput-login" type="text" placeholder="Cook Eii" />
-        </label>
-        <label for="" class="label-box">
-          <i class="fa-solid fa-envelope icons"></i>
-          <span class="vertical-line"></span>
-          <input class="iput-login" type="email" placeholder="cookeii@gmail.com" />
-        </label>
-        <label for="" class="label-box">
-          <i class="fa-solid fa-lock icons"></i>
-          <span class="vertical-line"></span>
-          <input class="iput-login" type="password" placeholder="password" />
-        </label>
-        <label for="" class="label-box">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>CookeII</title>
+	<link rel="icon" href="../../images/favico.ico" />
+	<link rel="stylesheet" href="./styles/createAccount.css" />
+	<link rel="stylesheet" href="./styles/login.css" />
+	<script src="https://kit.fontawesome.com/a22a8f4330.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="body-login">
+	<header class="go-back">
+		<p>Welcome to CookeII create account</p>
+		<a class="link-back" href="./index.html">Inicio</a>
+	</header>
+	<main class="container-form">
+		<img class="logo" src="./images/logo2.png" alt="logo" />
+		<form class="form" action="/finalyProject/SvUser" method="post" id="createUserForm">
+			<label for="userName" class="label-box">
+				<i class="fa-solid fa-user icons"></i>
+				<span class="vertical-line"></span>
+				<input class="iput-login" id="userName" type="text" name="userName" value="" placeholder="Cook Eii"
+					required />
+			</label>
+			<label for="email" class="label-box">
+				<i class="fa-solid fa-envelope icons"></i>
+				<span class="vertical-line"></span>
+				<input class="iput-login" type="email" name="email" id="email" value="" placeholder="cookeii@gmail.com"
+					required />
+			</label>
+			<label for="password" class="label-box">
+				<i class="fa-solid fa-lock icons"></i>
+				<span class="vertical-line"></span>
+				<input class="iput-login" type="password" name="password" id="password" value="" placeholder="password"
+					required />
+			</label>
+			<!--<label for="" class="label-box">
           <i class="fa-solid fa-rotate-left icons"></i>
           <span class="vertical-line"></span>
           <input class="iput-login" type="password" placeholder="repeat password" />
-        </label>
-      </form>
-      <div class="button-container">
-        <button class="button-create">
-          <a class="button-link" href="">Crear cuenta</a>
-        </button>
-        <nav class="account-l">
-          <a class="create-account" href="./login.html">Inciar sesión</a>
-        </nav>
-      </div>
-    </main>
-    </div>
-  </body>
+        </label>-->
+			<input type="submit" class="button" value="Crear cuenta">
+		</form>
+		<div class="button-container">
+			<nav class="account-l">
+				<a class="create-account" href="./login.html">Inciar sesión</a>
+			</nav>
+		</div>
+	</main>
+	</div>	
+	<script src="./js/sendDataUser.js"></script>
+</body>
 
 </html>

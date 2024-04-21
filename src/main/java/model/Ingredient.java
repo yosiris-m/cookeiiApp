@@ -13,11 +13,11 @@ public class Ingredient {
       this.ingredient = ingredient;
   }
   
-  public Ingredient(int id, String ingredient) {
+ /* public Ingredient(int id, String ingredient) {
 	super();
 	//this.id = id;
 	this.ingredient = ingredient;
-}
+}*/
 
   public int ingredientId(int id) {
 	  return id;

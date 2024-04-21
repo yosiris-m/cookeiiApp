@@ -2,16 +2,14 @@ package controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import model.Cook;
-import model.CookList;
 import model.Ingredient;
 import model.Preparation;
-
+import util.UploadFile;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -34,7 +32,6 @@ public class SvUpdate extends HttpServlet {
 	 */
 	public SvUpdate() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -43,7 +40,6 @@ public class SvUpdate extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
@@ -53,7 +49,6 @@ public class SvUpdate extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 
 		System.out.println("SvUpdate do post");
 
@@ -74,7 +69,7 @@ public class SvUpdate extends HttpServlet {
 		String state = request.getParameter("state");
 		String[] ingredientL = request.getParameterValues("ingredient");
 		String[] preparationL = request.getParameterValues("preparation");
-		Cook file = new Cook();
+		UploadFile file = new UploadFile();
 
 		// Leo los datos de la foto que me envian en el formulario
 		Part part = request.getPart("file");
@@ -83,17 +78,17 @@ public class SvUpdate extends HttpServlet {
 		// Nombre de archivo por defecto
 		String fileName = "";
 		Cook currentCook = null;
-
+		
 		try {
-			//crea una instancia dao
+			// crea una instancia dao
 			DaoCook dao = new DaoCook();
-			//asigna la instancia dao
+			// asigna la instancia dao
 			currentCook = dao.getCookDetails(id);
 
 			if (part.getSize() > 0) {
 				// Si se ha enviado una nueva foto, cargarla y obtener su nombre de archivo
 				fileName = file.uploadFile(part, path, uploadDir, response);
-				
+
 			} else {
 				// Si no se ha enviado una nueva foto, mantener el nombre de archivo existente
 				fileName = currentCook.getPhoto();
@@ -102,15 +97,28 @@ public class SvUpdate extends HttpServlet {
 			for (String ingredient : ingredientL) {
 				ingredients.add(new Ingredient(ingredient));
 			}
-             
+
 			List<Preparation> preparations = new ArrayList<>();
 			for (String preparation : preparationL) {
 				preparations.add(new Preparation(preparation));
 			}
 			// Actualizar el nombre del archivo de la foto en el objeto Cook
 			currentCook.setPhoto(fileName);
-			// actualiza la BD con los nuevos datos
-			dao.updateCookTable(new Cook(id, title, quantity, timePreparation, author, fileName, state,  ingredients, preparations));
+
+			// Actualiza la BD con los nuevos datos
+			Cook cook = new Cook();
+			cook.setId(id);
+			cook.setTitle(title);
+			cook.setQuantity(quantity);
+			cook.setTimePreparation(timePreparation);
+			cook.setAuthor(author);
+			cook.setPhoto(fileName);
+			cook.setState(state);
+			cook.setIngredient(ingredients);
+			cook.setPreparation(preparations);
+			
+			dao.updateCookTable(cook);
+
 			response.sendRedirect("index.html");
 		} catch (SQLException e) {
 			e.printStackTrace();

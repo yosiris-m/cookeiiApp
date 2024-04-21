@@ -1,20 +1,11 @@
 package model;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
-import util.StringUtil;
-
+/**
+ * 
+ */
 public class Cook {
 	private int id;
 	private String title;
@@ -23,26 +14,23 @@ public class Cook {
 	private String author;
 	private String photo;
 	private String state;
+	private int authorId;
+	private boolean isOwner;
 	private List<Ingredient> ingredients;
 	private List<Preparation> preparations;
 
-	// public Cook() {};
-
 	public Cook() {
+		// Inicializa la lista en el constructor
 		this.preparations = new ArrayList<>();
 		this.ingredients = new ArrayList<>();
-		// Inicializa la lista en el constructor
 	}
-	
 
-
-	public Cook(String title, int quantity, String timePreparation, String author, String photo, String state,
+	public Cook(String title, int quantity, String timePreparation, String photo, String state,
 			List<Ingredient> ingredient, List<Preparation> preparation) {
 		super();
 		this.title = title;
 		this.quantity = quantity;
 		this.timePreparation = timePreparation;
-		this.author = author;
 		this.photo = photo;
 		this.state = state;
 		this.ingredients = ingredient;
@@ -50,7 +38,7 @@ public class Cook {
 	}
 
 	public Cook(int id, String title, int quantity, String timePreparation, String author, String photo, String state,
-			List<Ingredient> ingredient, List<Preparation> preparation) {
+			int authorId, List<Ingredient> ingredient, List<Preparation> preparation) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -59,35 +47,10 @@ public class Cook {
 		this.author = author;
 		this.photo = photo;
 		this.state = state;
+		this.authorId = authorId;
 		this.ingredients = ingredient;
 		this.preparations = preparation;
 	}
-
-	// Método para crear el file
-	public String uploadFile(Part part, Path path, File upload, HttpServletResponse response)
-			throws IOException, ServletException {
-		// Guardo en modo texto el nombre del archivo para enviarlo a la bd
-		String fileName = path.getFileName().toString();
-		// Hago el camino o buffer por donde envio los datos
-		InputStream input = part.getInputStream();
-		// Concateno el tiempo con la imagen subida y asi optengo un nombre unico
-		
-		String extension = StringUtil.obtenerExtension(fileName);
-		
-		String newName = new Date().getTime()+ "." + extension;
-		File file = new File(upload, newName);
-
-		try {
-			Files.copy(input, file.toPath());
-
-		} catch (Exception e) {
-			PrintWriter error = response.getWriter();
-			error.print("<p>Se ha producido un error al copiar la foto, intentelo de nuevo</p>");
-		}
-
-		return newName;
-	}
-	
 
 	public int getId() {
 		return id;
@@ -145,6 +108,14 @@ public class Cook {
 		this.state = state;
 	}
 
+	public int getAuthorId() {
+		return authorId;
+	}
+
+	public void setAuthorId(int authorId) {
+		this.authorId = authorId;
+	}
+
 	public List<Ingredient> getIngredient() {
 		return ingredients;
 	}
@@ -161,12 +132,19 @@ public class Cook {
 		this.preparations = preparation;
 	}
 
+	public boolean isOwner() {
+		return isOwner;
+	}
+
+	public void setIsOwner(boolean isOwner) {
+		this.isOwner = isOwner;
+	}
+
 	@Override
 	public String toString() {
 		return "Cook [id=" + id + ", title=" + title + ", quantity=" + quantity + ", timePreparation=" + timePreparation
-				+ ", author=" + author + ", photo=" + photo + ", state=" + state + ", ingredient=" + ingredients
-				+ ", preparation=" + preparations + "]";
+				+ ", author=" + author + ", photo=" + photo + ", state=" + state + ", authorId=" + authorId
+				+ ", isOwner=" + isOwner + ", ingredients=" + ingredients + ", preparations=" + preparations + "]";
 	}
-
 
 }

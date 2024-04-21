@@ -1,46 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CookeII</title>
-    <link rel="icon" href="./images/favico.ico" />
-    <link rel="stylesheet" href="./styles/login.css" />
-    <link rel="stylesheet" href="./styles/header.css" />
-    <script src="https://kit.fontawesome.com/a22a8f4330.js" crossorigin="anonymous"></script>
-  </head>
-  <body class="body-login">
-    <header class="go-back">
-      <p>Welcome to CookeII login</p>
-      <a class="link-back" href="./index.html">Inicio</a>
-    </header>
-    <main class="container-form">
-      <img class="logo" src="./images/logo2.png" alt="logo" />
-      <form class="form" action="" method="post">
-        <label for="" class="label-box">
-          <i class="fa-solid fa-envelope icons"></i>
-          <span class="vertical-line"></span>
-          <input class="iput-login" type="email" placeholder="cookeii@gmail.com" />
-        </label>
-        <label for="" class="label-box">
-          <i class="fa-solid fa-lock icons"></i>
-          <span class="vertical-line"></span>
-          <input class="iput-login" type="password" placeholder="password" />
-        </label>
-      </form>
-      <div class="button-container">
-        <button class="button-login">
-          <a class="button-link" href="">Iniciar sesión</a>
-        </button>
-        <nav class="account-l">
-          <span>
-            No tienes cuenta
-          </span>
-          <a class="create-account" href="./createAcount.html">Crear</a>
-        </nav>
-        </section>
-      </div>
-  </body>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>CookeII</title>
+	<link rel="icon" href="./images/favico.ico" />
+	<link rel="stylesheet" href="./styles/login.css" />
+	<link rel="stylesheet" href="./styles/header.css" />
+	<script src="https://kit.fontawesome.com/a22a8f4330.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="body-login">
+	<header class="go-back">
+		<p>Welcome to CookeII login</p>
+		<a class="link-back" href="./index.html">Inicio</a>
+	</header>
+	<main class="container-form">
+		<img class="logo" src="./images/logo2.png" alt="logo"  />
+		<form class="form" action="/finalyProject/SvLogin" method="post">
+			<label for="email" class="label-box">
+				<i class="fa-solid fa-envelope icons"></i>
+				<span class="vertical-line"></span>
+				<input class="iput-login" type="email" name="email" value="" placeholder="cookeii@gmail.com" />
+			</label>
+			<label for="password" class="label-box">
+				<i class="fa-solid fa-lock icons"></i>
+				<span class="vertical-line"></span>
+				<input name="password" class="iput-login" type="password" placeholder="password" />
+			</label>
+			<div id="errorBox"></div>
+			<input class="button-login" value="Iniciar sesión" type="submit">
+		</form>
+		<div class="button-container">
+			<!-- button class="button-login">
+				<a class="button-link" href="">Iniciar</a></button -->
+
+			<nav class="account-l">
+				<span>
+					No tienes cuenta
+				</span>
+				<a class="create-account" href="./createAcount.html">Crear</a>
+			</nav>
+			</section>
+		</div>
+		<script>
+			const errorBox = document.getElementById("errorBox");
+			// Leer el parametro error
+			const queryString = window.location.search;
+			const urlParams = new URLSearchParams(queryString);
+			const errorParam = urlParams.get('error');
+
+			// Si viene el parámetro error mostrar un mensaje de login incorrecto
+			if (errorParam === "InvalidCredentials") {
+				errorBox.innerText = "Login incorrecto, vuelva a intentarlo";
+			}
+		</script>
+</body>
 
 </html>

@@ -11,7 +11,7 @@ function loadData() {
 	const urlParams = new URLSearchParams(window.location.search);
 
 	const id = Number.parseInt(urlParams.get("id"));
-	alert("update")
+	
 
 	if (id) {
 		fetchDetail(id)

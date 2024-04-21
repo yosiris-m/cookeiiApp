@@ -5,11 +5,13 @@ import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import model.Cook;
-import model.CookList;
 import model.Ingredient;
 import model.Preparation;
+import model.User;
+import util.UploadFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -59,7 +61,7 @@ public class SvCooks extends HttpServlet {
 		try {
 			// Llama al método getDataCook y le paso el objeto PrintWriter
 			List<Cook> cooks = new DaoCook().getCookList();
-
+             System.out.println("listado" + cooks);
 			// Convierte el objeto Java en formato JSON usando Gson
 			String json = gson.toJson(cooks);
 
@@ -82,32 +84,43 @@ public class SvCooks extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		System.out.println("SvCooks doPost, comprobando la sesion...");
+		//Obtiene el usuario en sesión
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		if (user == null) {
+			System.out.println("SvCooks doPost, el usuario en sesion es nulo");
+			response.sendRedirect("login.html");
+		} else {
+			System.out.println("SvCooks doPost, el usuario que ha iniciado sesión es -> " + user.getEmail());
+		}
+
 		String applicationPath = request.getServletContext().getRealPath("");
 		// System.out.println("*** applicationPath -> " + applicationPath);
 		String uploadPath = applicationPath + File.separator + "recipe_photo"; // Directorio para guardar las imágenes
 
 		File uploadDir = new File(uploadPath);
-		
-		  if (!uploadDir.exists()) {
-		  //System.out.println(" El directorio de las imagenes no existe, lo creamos";
-		  uploadDir.mkdir(); // Crea el directorio si no existe }
-		  }
+
+		if (!uploadDir.exists()) {
+			// System.out.println(" El directorio de las imagenes no existe, lo creamos";
+			uploadDir.mkdir(); // Crea el directorio si no existe }
+		}
 
 		String title = request.getParameter("title");
 		int quantity = Integer.parseInt(request.getParameter("quantity"));
 		String timePreparation = request.getParameter("timePreparation");
-		String author = request.getParameter("author");
+		//String author = request.getParameter("author");
 		String state = request.getParameter("state");
 		String[] ingredientL = request.getParameterValues("ingredient");
 		String[] preparationL = request.getParameterValues("preparation");
-		Cook file = new Cook();
+		UploadFile file = new UploadFile();
 
 		// Leo los datos de la foto que me envian en el formulario
 		Part part = request.getPart("file");
 		Path path = Paths.get(part.getSubmittedFileName());
 		// crea un objeto de la foto para añadirla a listado
 		String fileName = file.uploadFile(part, path, uploadDir, response);
-		
+
 		List<Preparation> preparations = new ArrayList<>();
 		for (String preparation : preparationL) {
 			preparations.add(new Preparation(preparation));
@@ -117,12 +130,12 @@ public class SvCooks extends HttpServlet {
 		for (String ingredient : ingredientL) {
 			ingredients.add(new Ingredient(ingredient));
 		}
-		CookList cookList = new CookList();
-		cookList.addCook(
-				new Cook(title, quantity, timePreparation, author, fileName, state, ingredients, preparations));
 
+		Cook cook = new Cook(title, quantity, timePreparation, fileName, state, ingredients, preparations);
 		try {
-			cookList.insert();
+			DaoCook dao = new DaoCook();
+			dao.insertCookTable(cook, user.getId());
+			
 			// Redirigir a la página HTML
 			response.sendRedirect("index.html");
 		} catch (SQLException e) {

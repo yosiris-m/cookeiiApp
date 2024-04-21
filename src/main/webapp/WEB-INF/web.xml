@@ -49,4 +49,34 @@
     <servlet-name>SVDelete</servlet-name>
     <url-pattern>/SVDelete</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SvUser</display-name>
+    <servlet-name>SvUser</servlet-name>
+    <servlet-class>controller.SvUser</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SvUser</servlet-name>
+    <url-pattern>/SvUser</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SvLogin</display-name>
+    <servlet-name>SvLogin</servlet-name>
+    <servlet-class>controller.SvLogin</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SvLogin</servlet-name>
+    <url-pattern>/SvLogin</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SvLogout</display-name>
+    <servlet-name>SvLogout</servlet-name>
+    <servlet-class>controller.SvLogout</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SvLogout</servlet-name>
+    <url-pattern>/SvLogout</url-pattern>
+  </servlet-mapping>
 </web-app>

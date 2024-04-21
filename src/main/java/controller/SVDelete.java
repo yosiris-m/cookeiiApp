@@ -1,25 +1,13 @@
 package controller;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
-import model.Cook;
-import model.CookList;
-import model.Ingredient;
-import model.Preparation;
-
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
-import dao.DaoCook;
+import dao.DaoDeleteCook;
 
 /**
  * Servlet implementation class SVDelete
@@ -49,13 +37,16 @@ public class SVDelete extends HttpServlet {
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    System.out.println("SvUDelete do delete");
 	    int id = Integer.parseInt(request.getParameter("id"));
-	    System.out.println("SvUDelete do delete---->" + id);
+	    
 
 	    try {
-	        DaoCook dao = new DaoCook();
+	        //DaoCook dao = new DaoCook();
+	    	DaoDeleteCook dao = new DaoDeleteCook();
 	        dao.deleteCook(id);
 	       response.setStatus(HttpServletResponse.SC_OK);
-	        response.sendRedirect("index.html");
+	       System.out.println("SvUDelete do delete---->" + id);
+	        response.setStatus(200);
+	        
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	       // response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
