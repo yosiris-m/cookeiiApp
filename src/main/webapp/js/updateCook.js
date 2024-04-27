@@ -5,32 +5,22 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 
 function loadData() {
-
-	// const updateId = document.getElementById("updateId");
-
 	const urlParams = new URLSearchParams(window.location.search);
-
 	const id = Number.parseInt(urlParams.get("id"));
 	
 
 	if (id) {
 		fetchDetail(id)
 			.then(data => {
-				//console.log("udtaed---->", data);
 				const title = data.title;
 				console.log("title udata---->", title);
 				const quantity = data.quantity;
 				const timePreparation = data.timePreparation;
 				const author = data.author;
 				const state = data.state;
-				const ingredients = data.ingredients;
-				//addPreparationStep(data.preparations)
-				const preparation = data.preparations;
-				//const imgPreview = data.preparations.img
 
 				const id = data.id;
 				document.getElementById("id").value = id;
-				console.log(id)
 
 				document.getElementById("title").value = title;
 				document.getElementById("quantity").value = quantity;
@@ -46,10 +36,6 @@ function loadData() {
 
 				showIngredientInput(data.ingredients);
 				addPreparationStep(data.preparations);
-
-				//console.log("ingredients update", ingredients)
-
-				//console.log("preparation", preparation)
 
 				console.log("udtaed---->", data);
 

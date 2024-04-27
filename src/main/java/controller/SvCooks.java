@@ -44,7 +44,6 @@ public class SvCooks extends HttpServlet {
 	 * Default constructor.
 	 */
 	public SvCooks() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -53,7 +52,6 @@ public class SvCooks extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
 		Gson gson = new Gson();
@@ -61,7 +59,6 @@ public class SvCooks extends HttpServlet {
 		try {
 			// Llama al método getDataCook y le paso el objeto PrintWriter
 			List<Cook> cooks = new DaoCook().getCookList();
-             System.out.println("listado" + cooks);
 			// Convierte el objeto Java en formato JSON usando Gson
 			String json = gson.toJson(cooks);
 
@@ -85,7 +82,7 @@ public class SvCooks extends HttpServlet {
 			throws ServletException, IOException {
 
 		System.out.println("SvCooks doPost, comprobando la sesion...");
-		//Obtiene el usuario en sesión
+		// Obtiene el usuario en sesión
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
@@ -96,20 +93,19 @@ public class SvCooks extends HttpServlet {
 		}
 
 		String applicationPath = request.getServletContext().getRealPath("");
-		// System.out.println("*** applicationPath -> " + applicationPath);
-		String uploadPath = applicationPath + File.separator + "recipe_photo"; // Directorio para guardar las imágenes
+		// Directorio para guardar las imágenes
+		String uploadPath = applicationPath + File.separator + "recipe_photo"; 
 
 		File uploadDir = new File(uploadPath);
 
 		if (!uploadDir.exists()) {
-			// System.out.println(" El directorio de las imagenes no existe, lo creamos";
-			uploadDir.mkdir(); // Crea el directorio si no existe }
+			// Crea el directorio si no existe
+			uploadDir.mkdir();  
 		}
 
 		String title = request.getParameter("title");
 		int quantity = Integer.parseInt(request.getParameter("quantity"));
 		String timePreparation = request.getParameter("timePreparation");
-		//String author = request.getParameter("author");
 		String state = request.getParameter("state");
 		String[] ingredientL = request.getParameterValues("ingredient");
 		String[] preparationL = request.getParameterValues("preparation");
@@ -131,7 +127,15 @@ public class SvCooks extends HttpServlet {
 			ingredients.add(new Ingredient(ingredient));
 		}
 
-		Cook cook = new Cook(title, quantity, timePreparation, fileName, state, ingredients, preparations);
+		Cook cook = new Cook();
+		cook.setTitle(title);
+		cook.setQuantity(quantity);
+		cook.setTimePreparation(timePreparation);
+		cook.setPhoto(fileName);
+		cook.setState(state);
+		cook.setIngredient(ingredients);
+		cook.setPreparation(preparations);
+		System.out.println("Nueva receta==>"+ cook);
 		try {
 			DaoCook dao = new DaoCook();
 			dao.insertCookTable(cook, user.getId());

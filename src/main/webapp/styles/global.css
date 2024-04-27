@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+:root {
+	--white: white;
+	--primary: #BB72DD;
+	--secundary: #BA72DC;
+	--primary-v:rgb(170, 16, 175);
+	--terciary:#ebe6e1;
+	--grenn-ic:rgba(0, 128, 0, 0.397);
+	--button-color: #e29209c5;
+	--button-hover: rgb(255, 128, 0);
+	--button-delete: #f10909;
+	--buttons:#0AAC04;
+	--buttons-hover:rgb(6, 137, 3);
+	--border:rgba(167, 18, 147, 0.315);
+}
+
+.flex-row {
+	display: flex;
+	flex-direction: row;
+}
+
+.flex-colunm {
+	display: flex;
+	flex-direction: column;
+}
+
+.link-home {
+  padding-left: 2rem;
+  color: white;
+}
+
+.margin {
+	margin-top: 1rem;
+}
+
+.footer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 3rem;
+	margin-top: 4rem;
+	width: 100%;
+	height: 6rem;
+}
+.logo-footer{
+	margin-top: 1rem;
+	width: 7rem;
+	height: 7rem;
+}
+
+.note {
+	width: 80%;
+	color: dimgray;
+
+	@media all and (min-width: 768px) {
+		width: 100%;
+		text-align: center;
+	}
+	
+}

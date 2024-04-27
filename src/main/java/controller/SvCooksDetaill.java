@@ -59,9 +59,6 @@ public class SvCooksDetaill extends HttpServlet {
 				isOwner = cook.getAuthorId() == user.getId();
 			}
 			cook.setIsOwner(isOwner);
-
-			System.out.println("detail cook" + cook);
-
 			// Convierte el objeto Java en formato JSON usando Gson
 			String json = gson.toJson(cook);
 

@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DaoDeleteCook {
-	public static Connection con = null;
+	public Connection con = null;
 
 	public DaoDeleteCook() throws SQLException {
 		try {

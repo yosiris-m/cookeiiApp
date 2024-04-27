@@ -6,17 +6,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.User;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.List;
-
 import com.google.gson.Gson;
-
-import dao.DaoCook;
-import dao.DaoUser;
 
 /**
  * Servlet implementation class SvUser
@@ -43,15 +36,12 @@ public class SvUser extends HttpServlet {
 		
 		PrintWriter out = response.getWriter();
 		
-		System.out.println("SvUser doGet, comprobando la sesion...");
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
-			System.out.println("SvUser doGet, el usuario en sesion es nulo");
 			String json = gson.toJson(null);
 			out.write(json);
 		} else {
-			System.out.println("SvUser doGet, el usuario que ha iniciado sesión es -> " + user.getEmail());
 			String json = gson.toJson(user);
 			out.write(json);
 			
@@ -67,7 +57,6 @@ public class SvUser extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		// Leer el JSON
 		String jsonString = request.getReader().readLine();
 		// Crear instancia Gson
@@ -77,12 +66,11 @@ public class SvUser extends HttpServlet {
 			User user = gson.fromJson(jsonString, User.class);
 			// Procesar el objeto Java
 			user.insert();
-			System.out.println("User inserted successfully: " + user);
-			//response.sendRedirect("index.html");
+			
 		} catch (SQLException e) {
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			//out.close();
-			e.printStackTrace(); // Log the exception for debugging
+			e.printStackTrace();
 		}
 
 	}

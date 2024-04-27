@@ -46,10 +46,10 @@ function addPreparationStep(preparations) {
 		const inputPreparation = document.createElement("section");
 		inputPreparation.classList.add("input-prep");
 		inputPreparation.innerHTML = `
-            <div class="box-prep-inp">
+            <div class="box-prep-inp margin">
                 <i class="fa-solid fa-square squa-c"></i> 
                 <label for="preparation" class="input-ing-prep"></label>
-                <textarea rows="1" maxLength="700" dir="auto" class="textarea input-focus input-focu" id="textarea" name="preparation" placeholder="Ej: Cortamos las patatas y las ponemos a cocinar" required>${item.preparation}</textarea>
+                <textarea rows="1" maxLength="700" dir="auto" class="textarea input-focus" id="textarea" name="preparation" placeholder="Ej: Cortamos las patatas y las ponemos a cocinar" required>${item.preparation}</textarea>
                 <button type="delete" id="btnpreraration" class="buttons buttons-delet" name="delete-preparation"><i class="fa-regular fa-trash-can"></i></button>
             </div>
         `;

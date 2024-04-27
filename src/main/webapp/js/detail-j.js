@@ -53,12 +53,24 @@ function detail(detailCook) {
       </div> 
       ${detailCook.isOwner ?
 			`<div class="box-butts">
-			<button class="button-wit edit icon-size" id="edit">
-			<i class="fa-regular fa-pen-to-square"></i></button>
-			<button class="button-wit  delete icon-size" id="delete"
-			 onclick="onDeleteButtonClick(${detailCook.id})">
-			<i class="fa-regular fa-trash-can"></i></button>
-		</div>` : ''}
+				<button class="button-wit edit icon-size" id="edit">
+				  <i class="fa-regular fa-pen-to-square"></i>
+				</button>
+				<button class="button-wit icon-size" onclick="toggleInfoModal()">
+				   <i class="fa-regular fa-trash-can  icon-dele"></i> 
+				</button>
+		   </div>
+		   <div class="modal-Info" id="showModalInfo" hidden>
+		      <div class="container-modal">
+		        <button type="close" class="close-info" id="closedModalInfo" onclick="toggleClosefoModal()">
+		          <i class="fa-solid fa-xmark"></i>
+		         </button> 
+				<p>¡Seguro que quieres eliminar la receta!</p>
+				<button type="delete" class="deleteCook">Eliminar</button>
+			   </div>	
+		  </div>
+		
+		` : ''}
     <article class="box-ingredient-preparation patrick-hand-regular"> 
       <div class="ingredient">
         <h3 class="mg-lef-M title-ing-prep">Ingredientes</h3>
@@ -83,16 +95,20 @@ function detail(detailCook) {
         </div>  
       </article>
     `;
-
+	const deleteCook = liCard.querySelector(".deleteCook");
 	const editButton = liCard.querySelector(".edit");
+
 
 	detailCook.isOwner ?
 		editButton.onclick = function() {
-			loggued(detailCook.isOwner)
 			const urlParams = new URLSearchParams(window.location.search);
 			window.location.href = `./updateCook.html?id=${urlParams.get("id")}`;
-
 		} : null
+
+      detailCook.isOwner ? 
+      	deleteCook.onclick = function() {
+		onDeleteButtonClick(detailCook.id);
+	}:null
 
 	detailCard.appendChild(liCard);
 }
@@ -110,7 +126,23 @@ fetchDetail(id)
 		console.error('Error al obtener los datos del detalle:', error);
 	});
 
+// Función para botón mostrar modal
+function toggleInfoModal() {
+	const showModalInfo = document.getElementById("showModalInfo");
+	if (showModalInfo) {
+		showModalInfo.style.display = 'block';
+	}
+}
+
+// Función para botón ocultar modal
+function toggleClosefoModal() {
+	const showModalInfo = document.getElementById("showModalInfo");
+	if (showModalInfo) {
+		showModalInfo.style.display = 'none';
+	}
+}
+
+
 function onDeleteButtonClick(id) {
-	// Llama la función delete y le paso el id a eliminar
-	fetchDelete(id);
+	fetchDelete(id)
 }

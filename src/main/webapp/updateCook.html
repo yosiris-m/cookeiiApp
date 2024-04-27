@@ -10,17 +10,17 @@
 	<link
 		href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Patrick+Hand&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Raleway:ital,wght@0,200;0,700;0,800;1,800&family=Shadows+Into+Light&display=swap"
 		rel="stylesheet">
-	<link rel="stylesheet" href="./styles/createCook.css" />
+	<link rel="stylesheet" href="./styles/global.css" />
+	<link rel="stylesheet" href="./styles/colors.css" />
 	<link rel="stylesheet" href="./styles/header.css" />
+	<link rel="stylesheet" href="./styles/createCook.css" />
+	
+	
+
 </head>
 
 <body>
-	<header id="header" class="container-header-create">
-		<a class="link-back" href="./index.html">
-			<i class="fa-solid fa-caret-left fa-lg"></i>
-		</a>
-		<img class="logo" src="./images/logo.png" alt="logo" />
-	</header>
+	<div id="header" class=""></div>
 	<main class="main-create">
 		<form method="post" action="/finalyProject/SvUpdate" class="form" enctype="multipart/form-data">
 			<input type="hidden" id="id" name="id">
@@ -87,14 +87,17 @@
 			</fieldset>
 			<fieldset>
 				<p class="titles-create ">Pasos preparación</p>
-				<div class="text-aling-let" id="element-prep"></div>
+				<div class="prep-element" id="element-prep"></div>
 				<button type="button" class="buttons" onclick="addNewPreparation()">+ Pasos</button>
 			</fieldset>
-			<button type="submit">Actualizar</button>
+			<button class="send-button" type="submit">Actualizar</button>
 		</form>
 	</main>
+	
 	<script src="./js/fetchDetail.js"></script>
 	<script src="./js/showDataCook.js"></script>
+	<script src="./js/fecthUsers.js"></script>
+	<script src="./js/header.js"></script>
 	<script src="./js/createCoookForm.js"></script>
 	<script src="./js/imagenPreview.js"></script>
 	<script src="./js/updateCook.js"></script>

@@ -34,7 +34,6 @@ public class DaoUser {
 			userInsert.setString(1, user.getUserName());
 			userInsert.setString(2, user.getPassword());
 			userInsert.setString(3, user.getEmail());
-			// userInsert.setInt(4,user.getRool());
 			userInsert.executeUpdate();
 
 		} catch (Exception e) {
@@ -85,8 +84,6 @@ public class DaoUser {
 	 */
 	public User validateUser(String email, String password) throws SQLException {
 		User user = null;
-		System.out.println("*** validateUser, email -> " + email);
-		System.out.println("*** validateUser, password -> " + password);
 
 		String query = "SELECT * FROM users WHERE email = ? and user_password = ? ";
 
@@ -98,14 +95,11 @@ public class DaoUser {
 		// Ejecuta la consulta y obtiene los resultados
 		ResultSet resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
-			System.out.println("*** validateUser, login correcto!");
 			user = new User();
 			user.setId(Integer.parseInt(resultSet.getString("id")));
 			user.setUserName(resultSet.getString("user_name"));
 			user.setEmail(resultSet.getString("email"));
 		}
-
-		System.out.println("*** validateUser, user -> " + user);
 
 		return user;
 	}

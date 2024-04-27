@@ -3,10 +3,10 @@
 const searchContainer = document.getElementById("search");
 
 function cookSearch() {
-  const search = document.createElement("form");
-  search.classList.add("form-search");
-  search.method = "get";
-  search.innerHTML = `
+	const search = document.createElement("form");
+	search.classList.add("form-search");
+	search.method = "get";
+	search.innerHTML = `
     <label for="name" class="icon-search">
       <i class="fa-solid fa-magnifying-glass"></i>
     </label>
@@ -21,24 +21,25 @@ function cookSearch() {
     </button>
   `;
 
-	if(searchContainer) searchContainer.appendChild(search);
+	if (searchContainer) searchContainer.appendChild(search);
 }
 
 cookSearch();
 
 const headCard = document.getElementById("box-card");
 function listCard() {
-  const list = document.createElement("div");
-  list.classList.add("nav-list");
-  list.innerHTML = `
-  <button class="all-list"><p class="all-border">Todas</p></button>
-  <button class="saved-list" >
-   <span><i id="ico-heart" class="fa-solid fa-bookmark fa-sm"></i> Guardadas</span>
- </button>
-
+	const list = document.createElement("div");
+	list.classList.add("bookmark");
+	list.innerHTML = ` 
+	<div class="nav-list">	
+	  <button class="all-list"><p class="all-border">Todas</p></button>
+	  <button class="saved-list" >
+	   <span><i id="ico-heart" class="fa-solid fa-bookmark fa-sm"></i> Guardadas</span>
+	 </button>
+   </div>	 
   `;
 
-  if(headCard) headCard.appendChild(list);
+	if (headCard) headCard.appendChild(list);
 }
 
 listCard();
@@ -48,35 +49,35 @@ inputSearch.addEventListener("input", cookList);
 const cookContainerList = document.getElementById("cook-list");
 
 
- function cookList(data) {
-  cookContainerList.innerHTML = "";
-  const filterData = inputSearch.value.toLowerCase();
-  const saveCooks = {};
-  let foundResults = false;
+function cookList(data) {
+	cookContainerList.innerHTML = "";
+	const filterData = inputSearch.value.toLowerCase();
+	const saveCooks = {};
+	let foundResults = false;
 
-  function toggleLiked(itemId) {
-    const likeIcon = document.getElementById(`like${itemId}`);
-    saveCooks[itemId] = !saveCooks[itemId];
+	function toggleLiked(itemId) {
+		const likeIcon = document.getElementById(`like${itemId}`);
+		saveCooks[itemId] = !saveCooks[itemId];
 
-    if (saveCooks[itemId]) {
-      likeIcon.classList.add("liked");
-    } else {
-      likeIcon.classList.remove("liked");
-    }
-  }
+		if (saveCooks[itemId]) {
+			likeIcon.classList.add("liked");
+		} else {
+			likeIcon.classList.remove("liked");
+		}
+	}
 
-  data.forEach(function (item) {
-      item.state == "remision" ? item.state = "Remisión": null; 
-      item.state == "brote leve moderado" ? item.state = "Brote leve-moderado": null;
-      item.state == "brote" ? item.state = "Brote": null;
-    const dataList = item.title.toLowerCase();
-    if (dataList.includes(filterData)) {
-      foundResults = true;
+	data.forEach(function(item) {
+		item.state == "remision" ? item.state = "Remisión" : null;
+		item.state == "brote leve moderado" ? item.state = "Brote leve-moderado" : null;
+		item.state == "brote" ? item.state = "Brote" : null;
+		const dataList = item.title.toLowerCase();
+		if (dataList.includes(filterData)) {
+			foundResults = true;
 
-      const liItem = document.createElement("li");
-      liItem.classList.add("list-item");
-      liItem.dataset.id = item.id;
-      liItem.innerHTML = `
+			const liItem = document.createElement("li");
+			liItem.classList.add("list-item");
+			liItem.dataset.id = item.id;
+			liItem.innerHTML = `
         <div class="box" > 
           <a class="link-detail " href="./detail.html?id=${item.id}">
             <div class="box-img-tile">
@@ -100,29 +101,29 @@ const cookContainerList = document.getElementById("cook-list");
         </div>
         
         `;
-      cookContainerList.appendChild(liItem);
+			cookContainerList.appendChild(liItem);
 
-      liItem.querySelector(".ico-like").addEventListener("click", function () {
-        toggleLiked(item.id);
-      });
-    }
-  });
+			liItem.querySelector(".ico-like").addEventListener("click", function() {
+				toggleLiked(item.id);
+			});
+		}
+	});
 
-  if (!foundResults) {
-    let notResults = document.createElement("p");
-    notResults.textContent = "No se encontraron resultados.";
-    cookContainerList.appendChild(notResults);
-  }
+	if (!foundResults) {
+		let notResults = document.createElement("p");
+		notResults.textContent = "No se encontraron resultados.";
+		cookContainerList.appendChild(notResults);
+	}
 }
 //cookList();
 fetchData()
-  .then(cookList)
-  .catch(error => {
-    console.error('Error al obtener los datos:', error);
-  });
+	.then(cookList)
+	.catch(error => {
+		console.error('Error al obtener los datos:', error);
+	});
 
 
 
 function handledReset() {
-  inputSearch.innerHTML = "";
+	inputSearch.innerHTML = "";
 }

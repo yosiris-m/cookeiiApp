@@ -11,7 +11,6 @@ import java.util.List;
 import model.Cook;
 import model.Ingredient;
 import model.Preparation;
-import model.User;
 
 public class DaoCook {
 
@@ -117,9 +116,6 @@ public class DaoCook {
 				cook.setAuthor(resultSet.getString("author"));
 				cook.setPhoto(resultSet.getString("photo"));
 				cook.setState(resultSet.getString("state"));
-				//cook.setAuthorId(resultSet.getInt("autor_id"));;
-				System.out.println("cook id"+ cook.getId());
-				//System.out.println("autor_id"+ cook.getAuthorId());
 	
 				result.add(cook);
 			}
