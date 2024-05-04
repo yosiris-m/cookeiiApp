@@ -1,28 +1,33 @@
 package controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+
+import com.google.gson.Gson;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.User;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
-import com.google.gson.Gson;
+import services.UserService;
 
 /**
  * Servlet implementation class SvUser
  */
 public class SvUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private UserService userService;
 
 	/**
+	 * @throws SQLException
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public SvUser() {
+	public SvUser() throws SQLException {
 		super();
-		// TODO Auto-generated constructor stub
+		userService = new UserService();
 	}
 
 	/**
@@ -31,11 +36,11 @@ public class SvUser extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		Gson gson = new Gson();
-		
+
 		PrintWriter out = response.getWriter();
-		
+
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
@@ -44,11 +49,11 @@ public class SvUser extends HttpServlet {
 		} else {
 			String json = gson.toJson(user);
 			out.write(json);
-			
+
 		}
-		
+
 		out.close();
-		
+
 	}
 
 	/**
@@ -65,11 +70,10 @@ public class SvUser extends HttpServlet {
 			// Convertir JSON a objeto java
 			User user = gson.fromJson(jsonString, User.class);
 			// Procesar el objeto Java
-			user.insert();
-			
+			userService.createUser(user);
+
 		} catch (SQLException e) {
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-			//out.close();
 			e.printStackTrace();
 		}
 

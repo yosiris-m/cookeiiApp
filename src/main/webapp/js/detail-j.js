@@ -105,10 +105,10 @@ function detail(detailCook) {
 			window.location.href = `./updateCook.html?id=${urlParams.get("id")}`;
 		} : null
 
-      detailCook.isOwner ? 
-      	deleteCook.onclick = function() {
-		onDeleteButtonClick(detailCook.id);
-	}:null
+	detailCook.isOwner ?
+		deleteCook.onclick = function() {
+			onDeleteButtonClick(detailCook.id);
+		} : null
 
 	detailCard.appendChild(liCard);
 }

@@ -1,5 +1,12 @@
 package controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.google.gson.Gson;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
@@ -8,24 +15,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import model.Cook;
-import model.Ingredient;
-import model.Preparation;
 import model.User;
-import util.UploadFile;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.google.gson.Gson;
-//import com.google.gson.JsonObject;
-
-import dao.DaoCook;
+import services.CookService;
 
 /**
  * Servlet implementation class SvCooks
@@ -34,16 +25,16 @@ import dao.DaoCook;
 @MultipartConfig
 public class SvCooks extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	// Creao la ruta donde se almacenan las fotos
-	// private String pathFile =
-	// "C:\\eclipse-work_space\\finalyProject\\src\\main\\webapp\\recipe_photo";
-	// Crea un objeto que direciona la ruta de las fotos
-	// private File upload = new File(pathFile);
+	private CookService cookService;
 
 	/**
 	 * Default constructor.
+	 * 
+	 * @throws SQLException
 	 */
-	public SvCooks() {
+	public SvCooks() throws SQLException {
+		super();
+		this.cookService = new CookService();
 	}
 
 	/**
@@ -58,7 +49,7 @@ public class SvCooks extends HttpServlet {
 
 		try {
 			// Llama al método getDataCook y le paso el objeto PrintWriter
-			List<Cook> cooks = new DaoCook().getCookList();
+			List<Cook> cooks = cookService.getAllCooks();
 			// Convierte el objeto Java en formato JSON usando Gson
 			String json = gson.toJson(cooks);
 
@@ -92,58 +83,37 @@ public class SvCooks extends HttpServlet {
 			System.out.println("SvCooks doPost, el usuario que ha iniciado sesión es -> " + user.getEmail());
 		}
 
-		String applicationPath = request.getServletContext().getRealPath("");
-		// Directorio para guardar las imágenes
-		String uploadPath = applicationPath + File.separator + "recipe_photo"; 
-
-		File uploadDir = new File(uploadPath);
-
-		if (!uploadDir.exists()) {
-			// Crea el directorio si no existe
-			uploadDir.mkdir();  
-		}
-
 		String title = request.getParameter("title");
 		int quantity = Integer.parseInt(request.getParameter("quantity"));
 		String timePreparation = request.getParameter("timePreparation");
 		String state = request.getParameter("state");
 		String[] ingredientL = request.getParameterValues("ingredient");
 		String[] preparationL = request.getParameterValues("preparation");
-		UploadFile file = new UploadFile();
 
 		// Leo los datos de la foto que me envian en el formulario
 		Part part = request.getPart("file");
-		Path path = Paths.get(part.getSubmittedFileName());
-		// crea un objeto de la foto para añadirla a listado
-		String fileName = file.uploadFile(part, path, uploadDir, response);
 
-		List<Preparation> preparations = new ArrayList<>();
-		for (String preparation : preparationL) {
-			preparations.add(new Preparation(preparation));
-		}
+		// Obtiene el directorio donde se ejecuta la aplicación
+		String applicationPath = request.getServletContext().getRealPath("");
 
-		List<Ingredient> ingredients = new ArrayList<>();
-		for (String ingredient : ingredientL) {
-			ingredients.add(new Ingredient(ingredient));
-		}
-
-		Cook cook = new Cook();
-		cook.setTitle(title);
-		cook.setQuantity(quantity);
-		cook.setTimePreparation(timePreparation);
-		cook.setPhoto(fileName);
-		cook.setState(state);
-		cook.setIngredient(ingredients);
-		cook.setPreparation(preparations);
-		System.out.println("Nueva receta==>"+ cook);
 		try {
-			DaoCook dao = new DaoCook();
-			dao.insertCookTable(cook, user.getId());
-			
+			String fileName = cookService.saveCookPhoto(part, applicationPath);
+
+			Cook cook = new Cook();
+			cook.setTitle(title);
+			cook.setQuantity(quantity);
+			cook.setTimePreparation(timePreparation);
+			cook.setPhoto(fileName);
+			cook.setState(state);
+			cook.addIngredients(ingredientL);
+			cook.addPreparations(preparationL);
+			System.out.println("Nueva receta==>" + cook);
+
+			cookService.createCook(cook, user.getId());
+
 			// Redirigir a la página HTML
 			response.sendRedirect("index.html");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("Error in DB");
 		}

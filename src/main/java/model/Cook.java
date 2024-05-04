@@ -140,6 +140,22 @@ public class Cook {
 		this.isOwner = isOwner;
 	}
 
+	public void addIngredients(String[] ingredientArray) {
+		List<Ingredient> ingredients = new ArrayList<>();
+		for (String ingredient : ingredientArray) {
+			ingredients.add(new Ingredient(ingredient));
+		}
+		this.ingredients = ingredients;
+	}
+	
+	public void addPreparations(String[] preparationArray) {
+		List<Preparation> preparations = new ArrayList<>();
+		for (String preparation : preparationArray) {
+			preparations.add(new Preparation(preparation));
+		}
+		this.preparations = preparations;
+	}
+
 	@Override
 	public String toString() {
 		return "Cook [id=" + id + ", title=" + title + ", quantity=" + quantity + ", timePreparation=" + timePreparation
