@@ -27,6 +27,10 @@ function detail(detailCook) {
           <i class="fa-regular fa-clock"></i>
             ${detailCook.timePreparation}
           </span>
+           <span class="mg-lef display-row-center">
+          <i class="fa-regular fa-clock"></i>
+            ${detailCook.author}
+          </span>
         </div>
           <div class="box-icons-title display-row-center">
             <div class="display-row-center">

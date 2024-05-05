@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +42,22 @@ public class DaoUser {
 		}
 	}
 
+	public void updateUser( String userPassword, String userEmail) throws SQLException {
+		String updateUserQuery = "UPDATE users SET user_password = ? WHERE email = ?";
+		
+		try (PreparedStatement userUpdate= con.prepareStatement(updateUserQuery)) {
+			userUpdate.setString(1, userPassword);
+			  userUpdate.setString(2, userEmail);
+			userUpdate.executeUpdate();
+
+			System.out.println("userInsert"+ userPassword);
+		} catch (Exception e) {
+			System.out.println("No se ha podido insertar el usuario!");
+			e.printStackTrace();
+		}
+	}
+
+	
 	public List<User> getUsers() {
 
 		List<User> resultUser = new ArrayList<User>();

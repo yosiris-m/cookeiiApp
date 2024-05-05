@@ -5,7 +5,7 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>CookeII</title>
-	<link rel="icon" href=".images/favico.ico" />
+	<link rel="icon" href="../../images/favico.ico" />
 	<link rel="stylesheet" href="./styles/global.css" />
 	<link rel="stylesheet" href="./styles/createAccount.css" />
 	<link rel="stylesheet" href="./styles/login.css" />
@@ -15,31 +15,20 @@
 <body class="body-login">
 	<main class="container-form">
 		<img class="logo" src="./images/logo2.png" alt="logo" />
-		<form class="form" method="post" action="/finalyProject/SvUser"  id="createUserForm">
-			<label for="userName" class="label-box">
-				<i class="fa-solid fa-user icons"></i>
-				<span class="vertical-line"></span>
-				<input class="iput-login" id="userName" type="text" name="userName" value="" placeholder="Cook Eii"
-					required />
-			</label>
+		<form class="form" method="post" action="/finalyProject/SvLogout">
 			<label for="email" class="label-box">
 				<i class="fa-solid fa-envelope icons"></i>
 				<span class="vertical-line"></span>
-				<input class="iput-login" type="email" name="email" id="email" value="" placeholder="cookeii@gmail.com"
+				<input class="iput-login" type="email" name="email" id="email" value="" placeholder="Email registrado"
 					required />
 			</label>
 			<label for="password" class="label-box">
 				<i class="fa-solid fa-lock icons"></i>
 				<span class="vertical-line"></span>
-				<input class="iput-login" type="password" name="password" id="password" value="" placeholder="password"
+				<input class="iput-login" type="password" name="password" id="password" value="" placeholder="Nueva contraseña"
 					required />
 			</label>
-			<!--<label for="" class="label-box">
-          <i class="fa-solid fa-rotate-left icons"></i>
-          <span class="vertical-line"></span>
-          <input class="iput-login" type="password" placeholder="repeat password" />
-        </label>-->
-			<input type="submit" class="button button-login" value="Crear cuenta">
+			<input type="submit" class="button button-login" value="Actualizar">
 		</form>
 		<div class="button-container">
 			<nav class="account-l">

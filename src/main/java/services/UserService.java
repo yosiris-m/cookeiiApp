@@ -19,4 +19,9 @@ public class UserService {
 	public User validateUser(String email, String password, String userName) throws SQLException {
 		return userDao.validateUser(email, password);
 	}
+
+	public void updateUser(String email, String password) throws SQLException {
+		 userDao.updateUser(password, email);
+		
+	}
 }

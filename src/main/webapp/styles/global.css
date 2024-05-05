@@ -5,6 +5,7 @@
 	--primary: #BB72DD;
 	--secundary: #BA72DC;
 	--primary-v:rgb(170, 16, 175);
+	--button-l: rgba(138, 6, 247, 0.747);
 	--terciary:#ebe6e1;
 	--grenn-ic:rgba(0, 128, 0, 0.397);
 	--button-color: #e29209c5;
@@ -59,4 +60,14 @@
 		text-align: center;
 	}
 	
+}
+
+.button-back {
+	margin-bottom: 1rem;
+	background: var(--secundary);
+	border-radius: 5rem;
+	color: var(--white);
+	cursor: pointer;
+	padding: 0.4rem;
+	text-decoration: none;
 }
