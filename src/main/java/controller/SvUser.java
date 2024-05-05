@@ -62,15 +62,16 @@ public class SvUser extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// Leer el JSON
-		String jsonString = request.getReader().readLine();
-		// Crear instancia Gson
-		Gson gson = new Gson();
+		
 		try {
-			// Convertir JSON a objeto java
-			User user = gson.fromJson(jsonString, User.class);
+			String userName = request.getParameter("userName");
+			String email = request.getParameter("email");
+			String password = request.getParameter("password");
+			
 			// Procesar el objeto Java
-			userService.createUser(user);
+			userService.createUser(userName,email, password);
+			// Redirigir a la página HTML
+			response.sendRedirect("login.html");
 
 		} catch (SQLException e) {
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

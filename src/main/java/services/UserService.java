@@ -12,11 +12,11 @@ public class UserService {
 		userDao = new DaoUser();
 	}
 
-	public void createUser(User userData) throws SQLException {
-		userDao.insertUser(userData);
+	public void createUser(String userName,String email, String userPassword) throws SQLException {
+		userDao.insertUser(userName,email,  userPassword);
 	}
 
-	public User validateUser(String email, String password) throws SQLException {
+	public User validateUser(String email, String password, String userName) throws SQLException {
 		return userDao.validateUser(email, password);
 	}
 }

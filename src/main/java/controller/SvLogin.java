@@ -38,7 +38,7 @@ public class SvLogin extends HttpServlet {
 		try {
 			String password = request.getParameter("password");
 			String email = request.getParameter("email");
-			User user = userService.validateUser(email, password);
+			User user = userService.validateUser(email, password, null);
 
 			// si resultado de validación es correcto
 			if (user != null) {

@@ -25,15 +25,16 @@ public class DaoUser {
 
 	}
 
-	public void insertUser(User user) throws SQLException {
+	public void insertUser(String userName,String email, String userPassword) throws SQLException {
 		String insertUserQuery = "INSERT INTO users (user_name, user_password, email) VALUES (?,?,?)";
 
 		try (PreparedStatement userInsert = con.prepareStatement(insertUserQuery)) {
-			userInsert.setString(1, user.getUserName());
-			userInsert.setString(2, user.getPassword());
-			userInsert.setString(3, user.getEmail());
+			userInsert.setString(1, userName);
+			userInsert.setString(2, userPassword);
+			userInsert.setString(3, email);
 			userInsert.executeUpdate();
 
+			System.out.println("userInsert"+userInsert);
 		} catch (Exception e) {
 			System.out.println("No se ha podido insertar el usuario!");
 			e.printStackTrace();
@@ -50,17 +51,18 @@ public class DaoUser {
 
 			// Prepara la sentencia SQL
 			PreparedStatement preparedStatement = con.prepareStatement(query);
-
+            
+			preparedStatement.setString(0, query);
 			// Ejecuta la consulta y obtiene los resultados
 			ResultSet resultSet = preparedStatement.executeQuery();
-
+			resultSet.getString("user_password");
 			while (resultSet.next()) {
 				User user = new User();
 				user.setId(resultSet.getInt("id"));
 				user.setUserName(resultSet.getString("user_name"));
 				user.setEmail(resultSet.getString("email"));
-				user.setPassword(resultSet.getString("user_password"));
-
+				//user.setPassword(resultSet.getString("user_password"));
+                 
 				resultUser.add(user);
 			}
 

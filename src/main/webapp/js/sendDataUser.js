@@ -1,12 +1,12 @@
 "use strict";
 
-document.addEventListener("DOMContentLoaded", function() {
+/*document.addEventListener("DOMContentLoaded", function() {
 	const createUserForm = document.getElementById("createUserForm");
 	createUserForm.addEventListener("submit", function(event) {
 		event.preventDefault();
 		sendDataUser();
 	});
-});
+});*/
 
 function sendDataUser() {
 	const userName = document.getElementById("userName").value;
