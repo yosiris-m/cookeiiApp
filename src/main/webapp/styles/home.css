@@ -7,7 +7,7 @@
 }
 
 .form-search {
-	background-color: rgba(192, 21, 192, 0.774);
+	background-color: var(--background-s);
 	border-radius: 30rem;
 	padding: 0.1rem;
 	position: relative;
@@ -41,7 +41,7 @@
 	top: 50%;
 	transform: translateY(-50%);
 	cursor: pointer;
-	color: gray;
+	color: var(--gry-color);
 	appearance: none;
 	border: none;
 }
@@ -52,7 +52,7 @@
 	top: 50%;
 	transform: translateY(-50%);
 	cursor: pointer;
-	color: gray;
+	color: var(--gry-color);
 }
 
 .bookmark {
@@ -70,7 +70,7 @@
 .all-list {
 	appearance: none;
 	border: none;
-	background-color: #ebe6e1;
+	background-color: var(--all-color);
 	font-family: "Patrick Hand", cursive;
 	font-size: 1rem;
 	margin-top: 2.2rem;
@@ -81,13 +81,13 @@
 }
 
 .all-border {
-	border-bottom: 1px solid blueviolet;
+	border-bottom: 1px solid var(--border);
 }
 
 .saved-list {
 	appearance: none;
 	border: none;
-	background-color: #ebe6e1;
+	background-color: var(--terciary);
 	font-family: "Patrick Hand", cursive;
 	font-size: 1rem;
 	margin-top: 2.2rem;
@@ -129,10 +129,10 @@
 
 .list-item {
 	box-sizing: border-box;
-	background-color: #ebdbea;
+	background-color: var(--list-color);
 	width: 100%;
 	border-radius: 8px;
-	border: 1px solid rgba(118, 14, 167, 0.705);
+	border: 1px solid var(--border-l);
 	margin-bottom: 1rem;
 
 	@media all and (min-width: 4px) and (max-width: 767px) {
@@ -148,7 +148,7 @@
 
 .link-detail {
 	text-decoration: none;
-	color: rgb(27, 26, 27);
+	color: var(--text-color);
 	position: relative;
 }
 
@@ -171,7 +171,7 @@
 }
 
 .title-items {
-	background-color: rgba(255, 255, 255, 0.877);
+	background-color: var(--background-1);
 	padding: 0.5rem 0.3rem 0.5rem 0.3rem;
 	font-size: 1rem;
 	border-radius: 0.2rem;
@@ -184,8 +184,8 @@
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	padding: 0 1rem 1rem 0.5rem;
-	margin-left: 0.3rem;
+	padding: 0 0.7rem 0.5rem 0.5rem;
+
 }
 
 .user-card {
@@ -194,23 +194,23 @@
 }
 
 .ico-card {
-	color: #ab70b9;
+	color: var(--primary);
 	padding-right: 0.2rem;
 }
 
 .circle {
-	color: #ab70b9;
+	color: var(--ico-color);
 }
 
 .ico-like {
-	color: rgb(85, 85, 85);
+	color: var(--ico-color);
 	cursor: pointer;
 }
 
 .liked {
-	color: #a11dc2;
+	color: var(--primary-v);
 }
 
 .notLiked {
-	color: rgb(85, 85, 85);
+	color: var(--ico-color);
 }

@@ -4,16 +4,40 @@
 	--white: white;
 	--primary: #BB72DD;
 	--secundary: #BA72DC;
-	--primary-v:rgb(170, 16, 175);
+	--primary-v: rgb(170, 16, 175);
+	--whitesmo: whitesmoke;
+	--text-color: rgb(27, 26, 27);
+	--ico-color: rgb(85, 85, 85);
+	--input-bacg: #d6d6d4;
+	--gr-color: rgb(196, 195, 195);
+	--ico-b: #f10909;
+	--hover-delete: #f02d2d;
+	--ali-color: aliceblue;
+	--divider: rgba(138, 6, 247, 0.747);
+	--input: rgba(230, 219, 239, 0.43);
+	--list-color: #ebdbea;
+	--color-ac: rgb(48, 134, 81);
+	--gry-color: gray;
+	--all-color: #ebe6e1;
+	--background-1: rgba(255, 255, 255, 0.877);
+	--background-c: #f7f7f7;
+	--background-s: rgba(192, 21, 192, 0.774);
 	--button-l: rgba(138, 6, 247, 0.747);
-	--terciary:#ebe6e1;
-	--grenn-ic:rgba(0, 128, 0, 0.397);
+	--terciary: #ebe6e1;
+	--grenn-ic: rgba(0, 128, 0, 0.397);
+	--ico-list: #c47d0bf6;
+	--icon-colors: #ffa100;
 	--button-color: #e29209c5;
 	--button-hover: rgb(255, 128, 0);
 	--button-delete: #f10909;
-	--buttons:#0AAC04;
-	--buttons-hover:rgb(6, 137, 3);
-	--border:rgba(167, 18, 147, 0.315);
+	--buttons: #0AAC04;
+	--buttons-hover: rgb(6, 137, 3);
+	--border: rgba(167, 18, 147, 0.315);
+	--border-l: rgb(211, 167, 233);
+}
+
+.w-100 {
+	width: 100%;
 }
 
 .flex-row {
@@ -21,14 +45,36 @@
 	flex-direction: row;
 }
 
+.spacing-left1 {
+	padding-left: 2rem;
+}
+
+.spacing-right1 {
+	padding-right: 0.2rem;
+}
+
+
 .flex-colunm {
 	display: flex;
 	flex-direction: column;
 }
 
+.flex-c-center {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.display-row-center {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
 .link-home {
-  padding-left: 2rem;
-  color: white;
+	padding-left: 2rem;
+	color: white;
 }
 
 .margin {
@@ -45,7 +91,8 @@
 	width: 100%;
 	height: 6rem;
 }
-.logo-footer{
+
+.logo-footer {
 	margin-top: 1rem;
 	width: 7rem;
 	height: 7rem;
@@ -59,7 +106,7 @@
 		width: 100%;
 		text-align: center;
 	}
-	
+
 }
 
 .button-back {
@@ -70,4 +117,8 @@
 	cursor: pointer;
 	padding: 0.4rem;
 	text-decoration: none;
+}
+
+.not-found {
+	font-size: 1.5rem;
 }

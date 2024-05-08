@@ -10,29 +10,6 @@ body {
 }
 
 
-.container-header-create {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	width: 100%;
-	height: 4rem;
-	background-color: var(--primary);
-	border-bottom: solid 1px var(--border);
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: 1;
-}
-
-.head-title {
-	color: white;
-}
-
-.link-back {
-	color: white;
-	margin-left: 1rem;
-}
-
 .main-create {
 	margin: 4rem auto;
 	background-color: rgb(212, 211, 208);
@@ -66,7 +43,7 @@ body {
 .img-cook {
 	width: 100%;
 	text-align: center;
-	background-color: #c4c4c475;
+	background-color: var(--input-bacg);
 	position: relative;
 	border-radius: 3px;
 	margin-top: 1.3rem;
@@ -91,12 +68,13 @@ body {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	color: #774b05f6;
+	color: var(--icon-colors);
 	font-size: 1rem;
 
 	@media all and (min-width: 768px) {
 		flex-direction: row;
 		justify-content: left;
+		font-size: 1.1rem;
 	}
 }
 
@@ -157,7 +135,7 @@ body {
 .image-text {
 	padding-left: 1rem;
 	margin-right: 1rem;
-	color: grey;
+	color: var(--gry-color);
 }
 
 /*box-title style*/
@@ -238,13 +216,13 @@ body {
 }
 
 .input-focus {
-	background-color: #d6d6d4;
+	background-color: var(--input-bacg);
 	border: none;
 }
 
 .input-focus:focus {
 	outline: none;
-	background-color: #d6d6d4;
+	background-color:  var(--input-bacg);
 }
 
 .iput-w {
@@ -267,13 +245,13 @@ body {
 }
 
 .diner {
-	color: #c47d0bf6;
+	color: var(--ico-list);
 }
 
 .m-r {
 	margin-right: 1rem;
 	width: 55%;
-	color: #c47d0bf6;
+	color: var(--ico-list);
 
 	@media all and (min-width: 768px) {
 		text-align: left;
@@ -324,7 +302,7 @@ body {
 .img-preparation {
 	width: 15rem;
 	height: 100%;
-	background-color: #d6d6d4;
+	background-color: var(--input-bacg);
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -373,8 +351,8 @@ body {
 
 .buttons {
 	padding: 0.3rem;
-	background-color: rgba(29, 153, 46, 0.726);
-	color: white;
+	background-color: var(--buttons-hover);
+	color: var(--white);
 	border: none;
 	border-radius: 5px;
 	cursor: pointer;
@@ -386,12 +364,12 @@ body {
 }
 
 .buttons:hover {
-	background-color: #0aac04;
+	background-color: var(--buttons);
 }
 
 .buttons-delet {
 	margin-left: 0.2rem;
-	background-color: rgb(196, 195, 195);
+	background-color: var(--gr-color);
 
 	@media all and (min-width: 768px) {
 		margin-left: 0.3rem;
@@ -399,16 +377,16 @@ body {
 }
 
 .buttons-delet:hover {
-	background-color: #f02d2d;
+	background-color: var(--hover-delete);
 }
 
 fieldset {
-	border: 0.2rem solid white;
-	background-color: #ebe6e1;
+	border: 0.2rem solid var(--white);
+	background-color: var(--all-color);
 }
 
 .titles-create {
-	color: #ffa100;
+	color: var(--icon-colors);
 	font-size: 1.3rem;
 	text-align: center;
 
@@ -423,7 +401,7 @@ fieldset {
 }
 
 .squa-c {
-	color: #ffa100;
+	color: var(--icon-colors);
 	font-size: 1rem;
 	padding-right: 0.2rem;
 	margin-left: 0px;

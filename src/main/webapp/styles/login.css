@@ -15,7 +15,7 @@
 	padding: 20px;
 	text-align: center;
 	margin-bottom: 1rem;
-	background-color: #f7f7f7;
+	background-color: var(--background-c);
 	margin-top: 5rem;
 
 
@@ -50,7 +50,7 @@
 
 .iput-login {
 	width: 100%;
-	background: rgba(230, 219, 239, 0.43);
+	background: var(--input);
 	border-radius: 0.2rem;
 	border: none;
 	margin-top: 0.3rem;
@@ -80,23 +80,23 @@
 	border-radius: 5rem;
 	border: none;
 	height: 2rem;
-	color: aliceblue;
+	color: var(--ali-color);
 	cursor: pointer;
 }
 
 .button-login:hover {
-	background: rgba(139, 6, 247, 0.973);
+	background: var(--button-l);
 }
 
 .create-account {
 	text-decoration: none;
-	background: rgba(230, 219, 239, 0.43);
+	background: var(--input);
 	border-radius: 0.2rem;
 	font-size: 1rem;
 }
 
 .create-account:hover {
-	color: rgb(48, 134, 81);
+	color: var(--color-ac);
 }
 
 .account-l {
@@ -106,7 +106,7 @@
 
 .button-link {
 	text-decoration: none;
-	color: aliceblue;
+	color: var(--ali-color);
 }
 
 .label-box {
@@ -114,7 +114,7 @@
 	flex-direction: row;
 	align-items: center;
 	height: 2.5rem;
-	background: rgba(230, 219, 239, 0.43);
+	background: var(--input);
 	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.349);
 	border-radius: 0.2rem;
 	margin: 1rem 1rem 1rem 1.5rem;
@@ -133,13 +133,13 @@
 .vertical-line {
 	width: 1px;
 	height: 100%;
-	background-color: rgba(138, 6, 247, 0.747);
+	background-color: var(--divider);
 }
 
 .icons {
 	padding-left: 1rem;
 	margin-right: 1rem;
-	color: rgba(138, 6, 247, 0.747);
+	color: var(--divider);
 	font-size: 1rem;
 
 	@media all and (min-width: 768px) {

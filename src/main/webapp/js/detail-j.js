@@ -2,10 +2,7 @@
 
 /**detail */
 
-
-
 function detail(detailCook) {
-	console.log("detailCook", detailCook)
 
 	const detailCard = document.getElementById("detail-l");
 	detailCook.state === "remision" ? detailCook.state = "Remisión" : null;
@@ -21,20 +18,20 @@ function detail(detailCook) {
         <img class="img-detail" src="./recipe_photo/${detailCook.photo}"
         alt="${detailCook.title}"/> 
         <div class="box-title">    
-          <h2 class="title-detail">${detailCook.title}</h2> 
-          <div class="flex-c-center"> 
-          <span class="mg-lef display-row-center">
-          <i class="fa-regular fa-clock"></i>
-            ${detailCook.timePreparation}
-          </span>
-           <span class="mg-lef display-row-center">
-          <i class="fa-regular fa-clock"></i>
+          <h2 class="title-d">${detailCook.title}</h2> 
+          <div class=""> 
+          <span class="mg-lef ">
+            <i class="fa-regular fa-user mg-lef icon"></i>
             ${detailCook.author}
+          </span>   
+          <span class="mg-lef">
+              <i class="fa-regular fa-clock icon spacing-left1"></i>
+              <span class="mg-lef"> ${detailCook.timePreparation}</span>
           </span>
         </div>
           <div class="box-icons-title display-row-center">
             <div class="display-row-center">
-                <i class="fa-regular fa-user mg-lef icon"></i>
+                <i class="fa-solid fa-utensils icon"></i>
                 <div class="flex-c-center"> 
                   <p class="icon-text">Raciones</p>
                   <span class="mg-lef display-row-center">
@@ -44,10 +41,10 @@ function detail(detailCook) {
                 </div>
             </div>
             <div class="display-row-center mg-lef-M">
-            <i class="fa-solid fa-chart-line mg-lef-M ico-font ${detailCook.state === "Remisión" ? "icon-remision" : "icon-brote"}"></i>
+            <i class="fa-solid fa-chart-line ico-font spacing-right1 ${detailCook.state === "Remisión" ? "icon-remision" : "icon-brote"}"></i>
                 <div class="flex-c-center"> 
-                  <p class="icon-text">Estado</p>
-                  <span class="mg-lef">
+                  <p class="icon-text mg-lef">Estado</p>
+                  <span>
                     ${detailCook.state}
                   </span>
                 </div>
@@ -77,27 +74,27 @@ function detail(detailCook) {
 		` : ''}
     <article class="box-ingredient-preparation patrick-hand-regular"> 
       <div class="ingredient">
-        <h3 class="mg-lef-M title-ing-prep">Ingredientes</h3>
+        <p class="title-ing-prep">Ingredientes</p>
         <ul class="list-d">
           ${detailCook.ingredients ? detailCook.ingredients.map((stepIng) =>
 				`<li class="list-ingredient">
-			   <i class="fa fa-check icon-check "></i>
-			    ${stepIng.ingredient}
-			 </li>`
+			         <i class="fa fa-check icon-check "></i>
+			         ${stepIng.ingredient}
+			    </li>`
 			).join("") : ''}
         </ul>
-        </div> 
+      </div> 
       <div class="box-preparation">
-        <h3 class="mg-lef-M title-ing-prep">Preparación</h3>  
+        <p class="title-ing-prep">Preparación</p>  
         <ol class="list-ol">
          ${detailCook.preparations ? detailCook.preparations.map((step) =>
 				`<li>
-              <p>${step.preparation}</p>
-            </li>`)
+                    <p>${step.preparation}</p>
+                </li>`)
 			.join("") : ''}
           </ol>
-        </div>  
-      </article>
+       </div>  
+     </article>
     `;
 	const deleteCook = liCard.querySelector(".deleteCook");
 	const editButton = liCard.querySelector(".edit");

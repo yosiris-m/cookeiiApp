@@ -16,7 +16,7 @@ function cookSearch() {
       class="input-search"
       placeholder="Buscar recetas por..."
     />
-    <button class="icon-delete" onclick="handleReset()">
+    <button class="icon-delete" onclick="handledReset()">
       <i class=""><i class="fa-solid fa-xmark"></i></i>
     </button>
   `;
@@ -34,7 +34,7 @@ function listCard() {
 	<div class="nav-list">	
 	  <button class="all-list"><p class="all-border">Todas</p></button>
 	  <button class="saved-list" >
-	   <span><i id="ico-heart" class="fa-solid fa-bookmark fa-sm"></i> Guardadas</span>
+	   <span><i id="ico-heart" class="fa-solid fa-bookmark fa-sm"></i> Favoritas</span>
 	 </button>
    </div>	 
   `;
@@ -45,11 +45,16 @@ function listCard() {
 listCard();
 
 const inputSearch = document.getElementById("input-search");
-inputSearch.addEventListener("input", cookList);
+inputSearch.addEventListener("input",
+	(event) => {
+		event.preventDefault();
+		cookList()
+	}
+);
 const cookContainerList = document.getElementById("cook-list");
 
-
-function cookList(data) {
+let cooks = [];
+function cookList() {
 	cookContainerList.innerHTML = "";
 	const filterData = inputSearch.value.toLowerCase();
 	const saveCooks = {};
@@ -66,58 +71,65 @@ function cookList(data) {
 		}
 	}
 
-	data.forEach(function(item) {
+	// Filtrar los datos fuera del bucle forEach
+	const filteredData = cooks.filter(item => item.title.toLowerCase().includes(filterData));
+	console.log("datos filtrados-->", filteredData)
+	// Itero sobre los datos filtrados
+	filteredData.forEach(function(item) {
 		item.state == "remision" ? item.state = "Remisión" : null;
 		item.state == "brote leve moderado" ? item.state = "Brote leve-moderado" : null;
 		item.state == "brote" ? item.state = "Brote" : null;
-		const dataList = item.title.toLowerCase();
-		if (dataList.includes(filterData)) {
-			foundResults = true;
 
-			const liItem = document.createElement("li");
-			liItem.classList.add("list-item");
-			liItem.dataset.id = item.id;
-			liItem.innerHTML = `
-        <div class="box" > 
-          <a class="link-detail " href="./detail.html?id=${item.id}">
-            <div class="box-img-tile">
-              <img class="img-card" id="cardImage" src="./recipe_photo/${item.photo}" alt="${item.title}">
-            <h4 class="title-items"><class="small" id="cardTitle" small>${item.title}</class=></h4>
+		foundResults = true;
+
+		const liItem = document.createElement("li");
+		liItem.classList.add("list-item");
+		liItem.dataset.id = item.id;
+		liItem.innerHTML = `
+            <div class="box" > 
+                <a class="link-detail " href="./detail.html?id=${item.id}">
+                    <div class="box-img-tile">
+                        <img class="img-card" id="cardImage" src="./recipe_photo/${item.photo}" alt="${item.title}">
+                        <h4 class="title-items"><class="small" id="cardTitle" small>${item.title}</class=></h4>
+                    </div>
+                    <p class="user-card">
+                        <i class="fa-solid fa-user fa-1x ico-card"></i>
+                        <span id="cardAuthor">${item.author}</span>
+                    </p>
+                </a>              
+                <div class="state-like">
+                    <span id="state">
+                        <i class="fa-solid fa-circle fa-xs ico-card circle"></i>
+                        ${item.state}
+                    </span>
+                    <div class="ico-like" id="like${item.id}">
+                        <i id="ico-heart" class="fa-solid fa-bookmark fa-sm"></i>
+                    </div>
+                </div>
             </div>
-            <p class="user-card">
-              <i class="fa-solid fa-user fa-1x ico-card"></i>
-              <span id="cardAuthor">${item.author}</span>
-            </p>
-          </a>              
-          <div class="state-like">
-            <span id="state">
-              <i class="fa-solid fa-circle fa-xs ico-card circle"></i>
-              ${item.state}
-            </span>
-            <div class="ico-like" id="like${item.id}">
-              <i id="ico-heart" class="fa-solid fa-bookmark fa-sm"></i>
-            </div>
-          </div>
-        </div>
-        
         `;
-			cookContainerList.appendChild(liItem);
+		cookContainerList.appendChild(liItem);
 
-			liItem.querySelector(".ico-like").addEventListener("click", function() {
-				toggleLiked(item.id);
-			});
-		}
+		liItem.querySelector(".ico-like").addEventListener("click", function() {
+			toggleLiked(item.id);
+		});
 	});
 
 	if (!foundResults) {
 		let notResults = document.createElement("p");
-		notResults.textContent = "No se encontraron resultados.";
+		notResults.classList.add("not-found");
+		notResults.textContent = "No se han encontrado los resultados buscados.";
 		cookContainerList.appendChild(notResults);
 	}
 }
+
 //cookList();
 fetchData()
-	.then(cookList)
+	.then(data => {
+		cooks = data;
+		cookList()
+	})
+
 	.catch(error => {
 		console.error('Error al obtener los datos:', error);
 	});
