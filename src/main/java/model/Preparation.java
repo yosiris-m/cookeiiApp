@@ -13,13 +13,6 @@ public class Preparation {
 		super();
 		this.preparation = preparation;
 	}
-
-
-	/*public Preparation(int id, String preparation) {
-		super();
-		this.id = id;
-		this.preparation = preparation;
-	}*/
 	
 	public int getId() {
 		return id;

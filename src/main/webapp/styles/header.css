@@ -1,6 +1,7 @@
 body {
 	margin: 0;
 	padding: 0;
+	font-family: "Patrick Hand", cursive;
 }
 
 .container-header {
@@ -33,12 +34,18 @@ body {
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
+
 }
 
 .user {
-	font-size: 1.6rem;
-	color: var(--white);
+	font-size: 1.8rem;
+	color: var(--primary);
 	padding-right: 0.6rem;
+
+	@media all and (min-width: 768px) {
+		color: var(--white);
+		font-size: 1.6rem;
+	}
 }
 
 .link-header {
@@ -46,10 +53,20 @@ body {
 	flex-direction: row;
 	justify-content: space-around;
 	align-items: baseline;
+	background-color: var(--all-color);
+	border-top: 1px solid var(--primary);
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	padding: 0.7rem;
 
-
-	@media all and (min-width: 768px) {	
+	@media all and (min-width: 768px) {
+		background-color: #BB72DD;
 		width: 30%;
+		position: static;
+		padding: 0;
+		border-top: none;
 	}
 }
 
@@ -60,24 +77,35 @@ body {
 .user-log {
 	display: flex;
 	flex-direction: column;
-	align-items: baseline;
-	color: var(--white);
+	align-items: center;
+	color: var(--primary-v);
 	font-size: 1.1rem;
+
+	@media all and (min-width: 768px) {
+		color: var(--white);
+		align-items: baseline;
+	}
 
 }
 
 .user-log a {
-	color: var(--white);
+	color: var(--primary-v);
 	border: 1px solid var(--white);
 	text-decoration: none;
 	border-radius: 5%;
 	padding: 0 0.2rem;
 	font-size: 0.8rem;
+
+	@media all and (min-width: 768px) {
+		color: var(--white);
+	}
 }
 
 .user-log a:hover {
 	background-color: var(--white);
 	color: var(--primary-v);
+
+
 }
 
 .logo-header {
@@ -89,11 +117,15 @@ body {
 	flex-direction: row;
 	align-items: center;
 	text-decoration: none;
-	color: var(--white);
 	border: 1px solid var(--primary);
 	width: 5rem;
 	padding-left: 1rem;
 	margin-top: 0.5rem;
+	color: var(--primary-v);
+
+	@media all and (min-width: 768px) {
+		color: var(--white);
+	}
 }
 
 .link:hover {
@@ -104,10 +136,14 @@ body {
 }
 
 .plus-ico {
-	border: 1px solid var(--white);
+	border: none;
 	padding: 0.1rem;
 	margin-right: 0.4rem;
 	font-size: 1rem;
+	
+	@media all and (min-width: 768px) {
+		border: 1px solid var(--white);
+	}
 }
 
 .plus-ico:hover {

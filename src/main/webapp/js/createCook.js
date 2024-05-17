@@ -1,17 +1,7 @@
 "use strict";
-// function handleSetFormTitle(action) {
-//     const titleElement = document.getElementById('title-createC');
-//     if (action === 'create') {
-//       titleElement.textContent = 'Crear nueva Receta';
-//     } else if (action === 'update') {
-//       titleElement.textContent = 'Actualizar Receta';
-//     }
-//   }
-
 
 function handleSubmitForm(event) {
   event.preventDefault();
-  let servletUrl = "/finalyProject/SvCooks"; 
 
   const title = document.getElementById("title").name
   const quantity = document.getElementById("quantity").value;
@@ -67,25 +57,5 @@ fetch("/finalyProject/SvCooks", {
 .catch(error => {
   console.error("Error al enviar los datos", error);
 });
-
-  console.log(
-    "create cook-->",
-    "title->",
-    title,
-    "comensales ->",
-    quantity,
-    "tiempo Preparation:",
-    timePreparation,
-    "autor;",
-    author,
-   "imagen principal:",
-    photo,
-    "stado:",
-    state,
-    "ingrediente:",
-    ingredient,
-    "preparation",
-    preparations
-  );
 
 }

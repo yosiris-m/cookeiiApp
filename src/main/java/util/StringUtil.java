@@ -2,9 +2,11 @@ package util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+/**
+ * Expresion regular para obtener la extension de la imagen
+ */
 
 public class StringUtil {
-	// Expresion regular para obtener la extension de la imagen
 	public static String getExtension(String fileName) {
 		String extension = "";
 		Pattern pattern = Pattern.compile("\\.(\\w+)$");

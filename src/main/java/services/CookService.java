@@ -9,12 +9,16 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
-
 import dao.DaoCook;
 import jakarta.servlet.http.Part;
 import model.Cook;
 import util.StringUtil;
 
+
+/** 
+ * La clase que proporciona métodos para obtener 
+ * detalles de una receta, actualizar,.
+ */
 public class CookService {
 	private DaoCook cookDao;
 
@@ -22,6 +26,22 @@ public class CookService {
 		this.cookDao = new DaoCook();
 	}
 
+	/**
+     * Obtiene los detalles del cocinero con el ID especificado.
+     * Además, determina si el usuario en sesión es el propietario de la receta del cocinero.
+     * @param cookId el ID del cocinero cuyos detalles se desean obtener
+     * @param loggedUserId el ID del usuario en sesión
+     * @return el cocinero con sus detalles y un indicador de si el usuario en sesión es el propietario de su receta
+     * @throws SQLException si ocurre un error de acceso a la base de datos
+     */
+	/** 
+	 * Obtiene los detalles del cocinero con el ID especificado
+	 * determina si el usuario en sesión es el propietario de la receta.
+	 * @param cookId
+	 * @param loggedUserId ID del usuario en sesión
+	 * @return
+	 * @throws SQLException
+	 */
 	public Cook getCookDetail(long cookId, Integer loggedUserId) throws SQLException {
 		Cook cook = this.cookDao.getCookDetails(cookId);
 

@@ -5,9 +5,8 @@
 	background-repeat: no-repeat;
 	margin: 0;
 	padding: 0;
-	height: 100%;
-
-	@media all and (min-width: 768px) {}
+	height: 100vh;
+	font-family:  'Open Sans';
 }
 
 
@@ -21,13 +20,13 @@
 
 	@media all and (min-width: 450px) and (max-width: 767px) {
 		padding: 1rem;
-		margin: 5rem auto;
+		margin: 4rem auto;
 		width: 18rem;
 	}
 
 	@media all and (min-width: 768px) {
 		padding: 2rem;
-		margin: 5rem auto;
+		margin: 3rem auto;
 		width: 16.5rem;
 	}
 }
@@ -39,7 +38,7 @@
 	@media all and (min-width: 768px) {
 		width: 10rem;
 		height: 6rem;
-		margin-bottom: 2rem;
+		margin-bottom: 1rem;
 	}
 }
 
@@ -101,7 +100,7 @@
 
 .account-l {
 	margin-top: 1rem;
-	margin-bottom: 3rem;
+	margin-bottom: 2rem;
 }
 
 .button-link {

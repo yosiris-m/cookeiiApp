@@ -19,15 +19,16 @@ function detail(detailCook) {
         alt="${detailCook.title}"/> 
         <div class="box-title">    
           <h2 class="title-d">${detailCook.title}</h2> 
-          <div class=""> 
-          <span class="mg-lef ">
-            <i class="fa-regular fa-user mg-lef icon"></i>
-            ${detailCook.author}
-          </span>   
-          <span class="mg-lef">
-              <i class="fa-regular fa-clock icon spacing-left1"></i>
-              <span class="mg-lef"> ${detailCook.timePreparation}</span>
-          </span>
+          <div class="author-time"> 
+	          <span class="mg-lef padding-t">
+	            <i class="fa-regular fa-user mg-lef icon-h"></i>
+	            ${detailCook.author}
+	          </span>   
+	          <span class="mg-lef padding-t">
+	              <i class="fa-regular fa-clock icon-h spacing-left1"></i>
+	              <span class="mg-lef"> ${detailCook.timePreparation}</span>
+	          </span>
+	          
         </div>
           <div class="box-icons-title display-row-center">
             <div class="display-row-center">
@@ -88,7 +89,7 @@ function detail(detailCook) {
         <p class="title-ing-prep">Preparación</p>  
         <ol class="list-ol">
          ${detailCook.preparations ? detailCook.preparations.map((step) =>
-				`<li>
+				`<li class="list-p">
                     <p>${step.preparation}</p>
                 </li>`)
 			.join("") : ''}

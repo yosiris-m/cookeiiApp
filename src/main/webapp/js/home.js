@@ -123,7 +123,6 @@ function cookList() {
 	}
 }
 
-//cookList();
 fetchData()
 	.then(data => {
 		cooks = data;

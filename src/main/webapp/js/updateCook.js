@@ -13,7 +13,6 @@ function loadData() {
 		fetchDetail(id)
 			.then(data => {
 				const title = data.title;
-				console.log("title udata---->", title);
 				const quantity = data.quantity;
 				const timePreparation = data.timePreparation;
 				const author = data.author;
@@ -37,7 +36,6 @@ function loadData() {
 				showIngredientInput(data.ingredients);
 				addPreparationStep(data.preparations);
 
-				console.log("udtaed---->", data);
 
 
 			})

@@ -20,21 +20,16 @@
 
 .box-card {
 	z-index: 2;
-	margin-top: 5rem;
-	
+	margin-top: 2rem;
+	text-align: center;
 	position: relative;
 
 	@media all and (min-width: 768px) {
-		max-width: 45rem;
+		max-width: 60rem;
 		padding-top: 1rem;
 		margin: 0 auto;
 	}
 
-	@media all and (min-width: 1220px) {
-		max-width: 65rem;
-		padding-top: 1rem;
-		margin: 0 auto;
-	}
 }
 
 .wrraper-home {
@@ -45,3 +40,4 @@
 		margin-top: 2.1rem;
 	}
 }
+
