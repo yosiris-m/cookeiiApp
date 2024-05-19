@@ -27,8 +27,7 @@ function detail(detailCook) {
 	          <span class="mg-lef padding-t">
 	              <i class="fa-regular fa-clock icon-h spacing-left1"></i>
 	              <span class="mg-lef"> ${detailCook.timePreparation}</span>
-	          </span>
-	          
+	          </span>  
         </div>
           <div class="box-icons-title display-row-center">
             <div class="display-row-center">

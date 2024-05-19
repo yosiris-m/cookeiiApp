@@ -19,8 +19,10 @@ public class Cook {
 	private List<Ingredient> ingredients;
 	private List<Preparation> preparations;
 
+ /** 
+  * Inicializa la lista en el constructor	 
+  */
 	public Cook() {
-		// Inicializa la lista en el constructor
 		this.preparations = new ArrayList<>();
 		this.ingredients = new ArrayList<>();
 	}

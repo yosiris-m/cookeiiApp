@@ -1,8 +1,6 @@
 package controller;
-
 import java.io.IOException;
 import java.sql.SQLException;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
@@ -19,7 +17,6 @@ import services.CookService;
 public class SvUpdate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CookService cookService;
-
 	/**
 	 * @throws SQLException
 	 * @see HttpServlet#HttpServlet()
@@ -35,7 +32,6 @@ public class SvUpdate extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		int id = Integer.parseInt(request.getParameter("id"));
 		String title = request.getParameter("title");
 		int quantity = Integer.parseInt(request.getParameter("quantity"));
@@ -44,13 +40,10 @@ public class SvUpdate extends HttpServlet {
 		String state = request.getParameter("state");
 		String[] ingredientL = request.getParameterValues("ingredient");
 		String[] preparationL = request.getParameterValues("preparation");
-
 		// Obtiene el directorio donde se ejecuta la aplicación
 		String applicationPath = request.getServletContext().getRealPath("");
-
 		// Leo los datos de la foto que me envian en el formulario
 		Part photoPart = request.getPart("file");
-
 		try {
 			Cook cook = new Cook();
 			cook.setId(id);
@@ -63,7 +56,6 @@ public class SvUpdate extends HttpServlet {
 			cook.addPreparations(preparationL);
 
 			this.cookService.updateCook(cook, photoPart, applicationPath);
-
 			// Redireccionar el cliente al index después de realizar la actualización
 			response.sendRedirect("index.html");
 		} catch (SQLException e) {

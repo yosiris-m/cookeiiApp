@@ -28,7 +28,6 @@ public class DaoCook {
 
 	}
 
-	// function insertar
 	public void insertCookTable(Cook cook, int userId) throws SQLException {
 		if (cook.getIngredient() == null) {
 			throw new IllegalArgumentException("La lista de ingredientes del Cook es null");

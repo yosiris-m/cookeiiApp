@@ -26,14 +26,6 @@ public class CookService {
 		this.cookDao = new DaoCook();
 	}
 
-	/**
-     * Obtiene los detalles del cocinero con el ID especificado.
-     * Además, determina si el usuario en sesión es el propietario de la receta del cocinero.
-     * @param cookId el ID del cocinero cuyos detalles se desean obtener
-     * @param loggedUserId el ID del usuario en sesión
-     * @return el cocinero con sus detalles y un indicador de si el usuario en sesión es el propietario de su receta
-     * @throws SQLException si ocurre un error de acceso a la base de datos
-     */
 	/** 
 	 * Obtiene los detalles del cocinero con el ID especificado
 	 * determina si el usuario en sesión es el propietario de la receta.
