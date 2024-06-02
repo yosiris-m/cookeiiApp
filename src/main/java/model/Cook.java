@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
+ * Clase que representa una receta.
  */
 public class Cook {
 	private int id;
@@ -19,14 +19,27 @@ public class Cook {
 	private List<Ingredient> ingredients;
 	private List<Preparation> preparations;
 
- /** 
-  * Inicializa la lista en el constructor	 
-  */
+	/**
+	 * Constructor por defecto que inicializa las listas de ingredientes y
+	 * preparaciones.
+	 */
 	public Cook() {
 		this.preparations = new ArrayList<>();
 		this.ingredients = new ArrayList<>();
 	}
 
+	/**
+	 * Constructor que inicializa todos los atributos de la receta.
+	 * 
+	 * @param title           Título de la receta.
+	 * @param quantity        Cantidad de porciones que produce la receta.
+	 * @param timePreparation Tiempo de preparación estimado.
+	 * @param photo           URL o ruta de la foto de la receta.
+	 * @param state           Estado actual de la enfermedad (brote, remisión,
+	 *                        etc.).
+	 * @param ingredient      Lista de ingredientes necesarios para la receta.
+	 * @param preparation     Lista de pasos de preparación de la receta.
+	 */
 	public Cook(String title, int quantity, String timePreparation, String photo, String state,
 			List<Ingredient> ingredient, List<Preparation> preparation) {
 		super();
@@ -39,6 +52,22 @@ public class Cook {
 		this.preparations = preparation;
 	}
 
+	/**
+	 * Constructor que inicializa todos los atributos de la receta, incluyendo el ID
+	 * y el autor.
+	 * 
+	 * @param id              ID único de la receta.
+	 * @param title           Título de la receta
+	 * @param quantity        Cantidad de porciones que produce la receta.
+	 * @param timePreparation Tiempo de preparación estimado.
+	 * @param author          Nombre del autor de la receta.
+	 * @param photo           URL o ruta de la foto de la receta.
+	 * @param state           Estado actual de la enfermedad (brote, remisión,
+	 *                        etc.).
+	 * @param authorId        ID del autor de la receta.
+	 * @param ingredient      Lista de ingredientes necesarios para la receta.
+	 * @param preparation     Lista de pasos de preparación de la receta.
+	 */
 	public Cook(int id, String title, int quantity, String timePreparation, String author, String photo, String state,
 			int authorId, List<Ingredient> ingredient, List<Preparation> preparation) {
 		super();
@@ -54,6 +83,11 @@ public class Cook {
 		this.preparations = preparation;
 	}
 
+	/**
+	 * Retorna el ID de la receta.
+	 *
+	 * @return ID de la receta.
+	 */
 	public int getId() {
 		return id;
 	}
@@ -118,18 +152,38 @@ public class Cook {
 		this.authorId = authorId;
 	}
 
+	/**
+     * Retorna la lista de ingredientes de la receta.
+     *
+     * @return Lista de ingredientes.
+     */
 	public List<Ingredient> getIngredient() {
 		return ingredients;
 	}
 
+	 /**
+     * Establece la lista de ingredientes de la receta.
+     *
+     * @param ingredients Lista de ingredientes.
+     */
 	public void setIngredient(List<Ingredient> ingredient) {
 		this.ingredients = ingredient;
 	}
 
+	  /**
+     * Establece la lista de pasos de preparación de la receta.
+     *
+     * @param preparations Lista de pasos de preparación.
+     */
 	public List<Preparation> getPreparation() {
 		return preparations;
 	}
 
+	 /**
+     * Establece la lista de pasos de preparación de la receta.
+     *
+     * @param preparations Lista de pasos de preparación.
+     */
 	public void setPreparation(List<Preparation> preparation) {
 		this.preparations = preparation;
 	}
@@ -142,6 +196,13 @@ public class Cook {
 		this.isOwner = isOwner;
 	}
 
+	/**
+	 * Agrega ingredientes a la receta a partir de un array de nombres de
+	 * ingredientes.
+	 * 
+	 * @param ingredientArray ingredientArray Array de nombres de ingredientes a
+	 *                        agregar.
+	 */
 	public void addIngredients(String[] ingredientArray) {
 		List<Ingredient> ingredients = new ArrayList<>();
 		for (String ingredient : ingredientArray) {
@@ -149,7 +210,13 @@ public class Cook {
 		}
 		this.ingredients = ingredients;
 	}
-	
+
+	/**
+	 * Agrega preparaciones a la receta a partir de un array de pasos de
+	 * preparación.
+	 * 
+	 * @param preparationArray Array de pasos de preparación a agregar.
+	 */
 	public void addPreparations(String[] preparationArray) {
 		List<Preparation> preparations = new ArrayList<>();
 		for (String preparation : preparationArray) {
@@ -158,6 +225,11 @@ public class Cook {
 		this.preparations = preparations;
 	}
 
+	/**
+	 * Retorna una representación en forma de cadena de la receta.
+	 * 
+	 * @return Cadena que representa la receta.
+	 */
 	@Override
 	public String toString() {
 		return "Cook [id=" + id + ", title=" + title + ", quantity=" + quantity + ", timePreparation=" + timePreparation

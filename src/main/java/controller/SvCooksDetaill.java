@@ -16,7 +16,7 @@ import model.User;
 import services.CookService;
 
 /**
- * Servlet implementation class SvCooksDetaill
+ * Servlet que maneja las peticiones para obtener detalles de una receta.
  */
 
 public class SvCooksDetaill extends HttpServlet {
@@ -48,16 +48,16 @@ public class SvCooksDetaill extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		Gson gson = new Gson();
 
-		// Leer el id de la receta de los parámetros de entrada
+		// Lee el id de la receta de los parámetros de entrada
 		String parameterValue = request.getParameter("id");
 		long cookId = Long.parseLong(parameterValue);
 
-		// Establecer el tipo de respuesta a JSON
+		// Establece el tipo de respuesta a JSON
 		response.setContentType("application/json");
 
 		try {
 
-			// Obtener el id del usuario en sesión, si existe
+			// Obtiene el id del usuario en sesión, si existe
 			HttpSession session = request.getSession();
 			User user = (User) session.getAttribute("user");
 			Integer loggedUserId = null;
@@ -65,7 +65,7 @@ public class SvCooksDetaill extends HttpServlet {
 				loggedUserId = user.getId();
 			}
 
-			// Obtener los detalles de la receta usando el id de receta
+			// Obtiene los detalles de la receta usando el id de receta
 			Cook cook = cookService.getCookDetail(cookId, loggedUserId);
 
 			// Convierte el objeto Java en formato JSON usando Gson

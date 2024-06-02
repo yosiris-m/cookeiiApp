@@ -12,11 +12,23 @@ import model.Cook;
 import model.Ingredient;
 import model.Preparation;
 
+/**
+ * Clase DAO para interactuar con la tabla de recetas (cooks) en la base de
+ * datos.
+ * 
+ * Esta clase proporciona métodos para insertar, actualizar, eliminar y
+ * consultar recetas en la base de datos MySQL.
+ */
 public class DaoCook {
 
 	public Connection con = null;
 
 	public DaoCook() throws SQLException {
+		/**
+		 * Constructor de la clase que inicializa la conexión a la base de datos.
+		 * 
+		 * @throws SQLException si ocurre un error al establecer la conexión.
+		 */
 		try {
 			this.con = DbConnection.dbConnection();
 			System.out.println("Connected to the database!");
@@ -28,6 +40,13 @@ public class DaoCook {
 
 	}
 
+	/**
+	 * Método para insertar una nueva receta en la base de datos.
+	 * 
+	 * @param cook   objeto Cook que contiene los datos de la receta a insertar
+	 * @param userId ID del usuario que crea la receta
+	 * @throws SQLException si ocurre un error SQL durante la inserción
+	 */
 	public void insertCookTable(Cook cook, int userId) throws SQLException {
 		if (cook.getIngredient() == null) {
 			throw new IllegalArgumentException("La lista de ingredientes del Cook es null");
@@ -65,7 +84,14 @@ public class DaoCook {
 		}
 	}
 
-	// function insertar ingredientes
+	/**
+	 * Método privado para insertar un ingrediente asociado a una receta.
+	 * 
+	 * @param recipe_id  ID de la receta a la que se asocia el ingrediente
+	 * @param ingredient objeto Ingredient que contiene los datos del ingrediente a
+	 *                   insertar
+	 * @throws SQLException si ocurre un error SQL durante la inserción
+	 */
 	private void insertIngredient(long recipe_id, Ingredient ingredient) throws SQLException {
 		String insertIngredientQuery = "INSERT INTO ingredients (fk_recipe_id, ingredient) VALUES (?, ?)";
 		try (PreparedStatement prepStatement = con.prepareStatement(insertIngredientQuery,
@@ -77,24 +103,30 @@ public class DaoCook {
 		}
 	}
 
-	// function insertar preparaciones
+	/**
+	 * Método privado para insertar una preparación asociada a una receta.
+	 * @param recipe_id e la receta a la que se asocia la preparación
+	 * @param preparation objeto Preparation que contiene los datos de la preparación a insertar
+	 * @throws SQLException si ocurre un error SQL durante la inserción
+	 */
 	private void insertPreparation(long recipe_id, Preparation preparation) throws SQLException {
 		String insertPreparationQuery = "INSERT INTO preparations (fk_recipe_id, preparation) VALUES (?,?)";
 		try (PreparedStatement prepStatement = con.prepareStatement(insertPreparationQuery,
 				Statement.RETURN_GENERATED_KEYS)) {
 			prepStatement.setLong(1, recipe_id);
 			prepStatement.setString(2, preparation.getPreparation());
-			// prepStatement.setString(3, preparation.getImg());
 			prepStatement.execute();
 
 		}
 	}
 
-	// function listar ingredientes
+	/**
+	 * Método para obtener la lista de todas las recetas.
+	 * @return lista de objetos Cook que representan todas las recetas almacenadas en la base de datos
+	 * @throws SQLException si ocurre un error SQL durante la consulta
+	 */
 	public List<Cook> getCookList() throws SQLException {
 		List<Cook> result = new ArrayList<Cook>();
-		// int userId;
-
 		// Consulta SQL para seleccionar los datos que deseas recuperar
 
 		String query = "SELECT c.id, title, quantity, timePreparation, u.user_name AS author, photo, state FROM cooks c INNER JOIN users u ON c.fk_user_id = u.id";
@@ -118,7 +150,6 @@ public class DaoCook {
 
 				result.add(cook);
 			}
-			System.out.println("result" + result);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -127,7 +158,11 @@ public class DaoCook {
 		return result;
 	}
 
-	// function actualizar receta
+	/**
+	 * Método para actualizar una receta en la base de datos.
+	 * @param cook objeto Cook que contiene los nuevos datos de la receta a actualizar
+	 * @throws SQLException si ocurre un error SQL durante la actualización
+	 */
 	public void updateCookTable(Cook cook) throws SQLException {
 
 		String updateCookQuery = "UPDATE cooks SET title=?, quantity=?, timePreparation=?, photo=?, state=? WHERE id=?";
@@ -145,7 +180,7 @@ public class DaoCook {
 			if (cookIsUpdate > 0) {
 				// Elimina los ingredientes que existen en la BD
 				this.deleteIngredients(cook.getId());
-				// Insertar nuevos ingredientes
+				// Inserta nuevos ingredientes
 				for (Ingredient ingredient : cook.getIngredient()) {
 					insertIngredient(cook.getId(), ingredient);
 				}
@@ -166,7 +201,12 @@ public class DaoCook {
 
 	}
 
-	// function trae los detalles de una receta
+/**
+ * Método para obtener los detalles de una receta específica.
+ * @param recipeId ID de la receta de la cual se quieren obtener los detalles
+ * @return objeto Cook que contiene los detalles de la receta
+ * @throws SQLException si ocurre un error SQL durante la consulta
+ */
 	public Cook getCookDetails(long recipeId) throws SQLException {
 		Cook cook = new Cook();
 
@@ -180,7 +220,7 @@ public class DaoCook {
 		PreparedStatement preparedStatementIngrd = con.prepareStatement(queryIngredients);
 		PreparedStatement preparedStatementPrep = con.prepareStatement(queryPreparations);
 
-		// Consulta para los detalles del cocinero
+		// Consulta para los detalles de la receta
 		preparedStatement.setLong(1, recipeId);
 		try (ResultSet resultSetCook = preparedStatement.executeQuery()) {
 
@@ -233,7 +273,11 @@ public class DaoCook {
 		return cook;
 	}
 
-	// function elimina los ingredientes para luego ser insertados
+	/**
+	 * Elimina todos los ingredientes asociados a una receta específica de la base de datos.
+	 * @param recipe_id ID de la receta cuyos ingredientes se van a eliminar
+	 * @throws SQLException si ocurre un error SQL durante la eliminación
+	 */
 	public void deleteIngredients(int recipe_id) throws SQLException {
 		String deleteIngredientQuery = "DELETE FROM ingredients WHERE fk_recipe_id = ?";
 
@@ -245,7 +289,11 @@ public class DaoCook {
 		}
 	}
 
-	// function elimina las preparaciones para luegoser insertadas
+	/**
+	 * Elimina todas las preparaciones asociadas a una receta específica de la base de datos. 
+	 * @param recipe_id ID de la receta cuyas preparaciones se van a eliminar
+	 * @throws SQLException si ocurre un error SQL durante la eliminación
+	 */
 	public void deletePreparations(int recipe_id) throws SQLException {
 		String deletePreparationQuery = "DELETE FROM preparations WHERE fk_recipe_id = ?";
 
@@ -257,7 +305,12 @@ public class DaoCook {
 
 		}
 	}
-	
+
+	/**
+	 * Elimina una receta específica de la base de datos, incluidos sus ingredientes y preparaciones.
+	 * @param recipe_id ID de la receta a eliminar
+	 * @throws SQLException si ocurre un error SQL durante la eliminación
+	 */
 	public void deleteCook(int recipe_id) throws SQLException {
 		// DELETE FROM cooks WHERE id = 1;
 		String deleteCookQuery = "DELETE FROM cooks WHERE id = ?";

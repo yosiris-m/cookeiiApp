@@ -10,8 +10,19 @@ import java.util.List;
 
 import model.User;
 
+/**
+ * Clase DAO para interactuar con la tabla de usuarios en la base de datos.
+ * 
+ * Esta clase proporciona métodos para insertar, actualizar y recuperar usuarios
+ * desde la base de datos MySQL.
+ */
 public class DaoUser {
 
+	/**
+	 * Constructor de la clase que inicializa la conexión a la base de datos.
+	 * 
+	 * @throws SQLException si ocurre un error al establecer la conexión.
+	 */
 	public static Connection con = null;
 
 	public DaoUser() throws SQLException {
@@ -26,7 +37,15 @@ public class DaoUser {
 
 	}
 
-	public void insertUser(String userName,String email, String userPassword) throws SQLException {
+	/**
+	 * Método para insertar un nuevo usuario en la base de datos.
+	 * 
+	 * @param userName     nombre del usuario.
+	 * @param email        correo electrónico del usuario.
+	 * @param userPassword contraseña del usuario.
+	 * @throws SQLException si ocurre un error SQL durante la inserción.
+	 */
+	public void insertUser(String userName, String email, String userPassword) throws SQLException {
 		String insertUserQuery = "INSERT INTO users (user_name, user_password, email) VALUES (?,?,?)";
 
 		try (PreparedStatement userInsert = con.prepareStatement(insertUserQuery)) {
@@ -35,29 +54,41 @@ public class DaoUser {
 			userInsert.setString(3, email);
 			userInsert.executeUpdate();
 
-			System.out.println("userInsert"+userInsert);
+			System.out.println("userInsert" + userInsert);
 		} catch (Exception e) {
 			System.out.println("No se ha podido insertar el usuario!");
 			e.printStackTrace();
 		}
 	}
 
-	public void updateUser( String userPassword, String userEmail) throws SQLException {
+	/**
+	 * Método para actualizar la contraseña de un usuario.
+	 * 
+	 * @param userPassword nueva contraseña del usuario.
+	 * @param userEmail correo electrónico del usuario cuya contraseña se
+	 *                  actualizará.
+	 * @throws SQLException si ocurre un error SQL durante la actualización.
+	 */
+	public void updateUser(String userPassword, String userEmail) throws SQLException {
 		String updateUserQuery = "UPDATE users SET user_password = ? WHERE email = ?";
-		
-		try (PreparedStatement userUpdate= con.prepareStatement(updateUserQuery)) {
+
+		try (PreparedStatement userUpdate = con.prepareStatement(updateUserQuery)) {
 			userUpdate.setString(1, userPassword);
-			  userUpdate.setString(2, userEmail);
+			userUpdate.setString(2, userEmail);
 			userUpdate.executeUpdate();
 
-			System.out.println("userInsert"+ userPassword);
+			System.out.println("userInsert" + userPassword);
 		} catch (Exception e) {
 			System.out.println("No se ha podido insertar el usuario!");
 			e.printStackTrace();
 		}
 	}
 
-	
+	/**
+	 * Método para obtener todos los usuarios de la base de datos.
+	 * 
+	 * @return lista de usuarios recuperados de la base de datos
+	 */
 	public List<User> getUsers() {
 
 		List<User> resultUser = new ArrayList<User>();
@@ -68,7 +99,7 @@ public class DaoUser {
 
 			// Prepara la sentencia SQL
 			PreparedStatement preparedStatement = con.prepareStatement(query);
-            
+
 			preparedStatement.setString(0, query);
 			// Ejecuta la consulta y obtiene los resultados
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -78,8 +109,7 @@ public class DaoUser {
 				user.setId(resultSet.getInt("id"));
 				user.setUserName(resultSet.getString("user_name"));
 				user.setEmail(resultSet.getString("email"));
-				//user.setPassword(resultSet.getString("user_password"));
-                 
+
 				resultUser.add(user);
 			}
 
@@ -93,11 +123,11 @@ public class DaoUser {
 	/**
 	 * Método para validar las credenciales de un usuario
 	 * 
-	 * @param email
-	 * @param password
+	 * @param email correo electrónico del usuario
+	 * @param password contraseña del usuario
 	 * @return Devuelve el usuario si las credenciales son correctas o null en otro
 	 *         caso.
-	 * @throws SQLException
+	 * @throws SQLException si ocurre un error SQL durante la validación
 	 */
 	public User validateUser(String email, String password) throws SQLException {
 		User user = null;

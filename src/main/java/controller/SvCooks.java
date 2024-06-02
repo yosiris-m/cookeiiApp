@@ -38,6 +38,12 @@ public class SvCooks extends HttpServlet {
 	}
 
 	/**
+	 * @param request  el objeto HttpServletRequest que contiene la solicitud del
+	 *                 cliente
+	 * @param response el objeto HttpServletResponse que contiene la respuesta del
+	 *                 servidor
+	 * @throws ServletException si ocurre un error relacionado con el servlet
+	 * @throws IOException      si ocurre un error de entrada/salidaF
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -66,13 +72,16 @@ public class SvCooks extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * Este método procesa el envío de un formulario mediante el manejo de solicitud
+	 * HTTP POST. Crea un nuevo objeto Cook. Recupera los datos del formulario,
+	 * guarda una foto subida y almacena el objeto Cook en la base de datos.
+	 * @param request  contiene la solicitud que el cliente ha hecho al servlet
+	 * @param response  contiene la respuesta que el servlet envía al cliente
 	 */
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		System.out.println("SvCooks doPost, comprobando la sesion...");
 		// Obtiene el usuario en sesión
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
@@ -107,11 +116,10 @@ public class SvCooks extends HttpServlet {
 			cook.setState(state);
 			cook.addIngredients(ingredientL);
 			cook.addPreparations(preparationL);
-			System.out.println("Nueva receta==>" + cook);
 
 			cookService.createCook(cook, user.getId());
 
-			// Redirigir a la página HTML
+			// Redirige a la página HTML
 			response.sendRedirect("index.html");
 		} catch (SQLException e) {
 			e.printStackTrace();

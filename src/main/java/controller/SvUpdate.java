@@ -11,24 +11,35 @@ import model.Cook;
 import services.CookService;
 
 /**
- * Servlet implementation class SvUpdate
+ * Servlet para manejar la actualización de una receta.
  */
 @MultipartConfig
 public class SvUpdate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CookService cookService;
+	
 	/**
-	 * @throws SQLException
-	 * @see HttpServlet#HttpServlet()
-	 */
+     * Constructor que inicializa el servlet y crea una instancia del servicio `CookService`.
+     * @throws SQLException si ocurre un error al conectar con la base de datos
+     */
 	public SvUpdate() throws SQLException {
 		super();
 		this.cookService = new CookService();
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+     * 
+     * Este método obtiene los parámetros del formulario HTML que contienen los datos actualizados
+     * de la receta. Luego, crea un objeto `Cook` con esos datos y utiliza el servicio `CookService`
+     * para actualizar la receta en la base de datos.
+     * Maneja la actualización de la foto asociada a la receta, si se proporciona una nueva.
+     * 
+     * Si la actualización se realiza correctamente, redirige al usuario a la página principal (`index.html`).
+     * En caso de error durante la actualización, imprime el stack trace del error y muestra un mensaje
+     * de error en la consola.
+     * 
+     * @param request contiene la solicitud que el cliente ha hecho al servlet
+     * @param response contiene la respuesta que el servlet envía al cliente
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

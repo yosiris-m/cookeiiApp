@@ -12,25 +12,31 @@ import model.User;
 import services.UserService;
 
 /**
- * Servlet implementation class SvLogin
+ * * Servlet para manejar el proceso de inicio de sesión de usuarios.
  */
 public class SvLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UserService userService;
 
 	/**
-	 * @throws SQLException 
-	 * @see HttpServlet#HttpServlet()
+	 * Constructor que inicializa el servlet y crea una instancia del servicio
+	 * `UserService`.
+	 * 
+	 * @throws SQLException si ocurre un error al conectar con la base de datos
 	 */
 	public SvLogin() throws SQLException {
 		super();
 		userService = new UserService();
 	}
 
-
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * Manejo de las solicitudes HTTP POST enviadas al servlet.
+	 * Este método valida las credenciales de inicio de sesión enviadas desde el
+	 * formulario HTML. Verifica el email y contraseña proporcionados utilizando el
+	 * servicio `UserService`. Si las credenciales son válidas, crea una sesión para
+	 * el usuario y lo redirige a la página principal. Si las credenciales son
+	 * inválidas, redirige de vuelta a la página de inicio de sesión con un mensaje
+	 * de error de sesión.
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
