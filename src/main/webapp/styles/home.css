@@ -11,17 +11,23 @@
 	border-radius: 30rem;
 	padding: 0.1rem;
 	position: relative;
-	margin: 1rem 0 0.5rem 0;
+	margin: 1rem auto 0.5rem auto; 
 	z-index: 6;
+	width: 90%;
+	max-width: 30rem; 
 
 	@media all and (min-width: 450px) and (max-width: 767px) {
 		width: 50%;
-		left: 24.5%;
 	}
 
 	@media all and (min-width: 768px) {
-		width: 30rem;
-		left: 31%;
+		width: 50%;
+		max-width: 30rem;
+	}
+
+	@media all and (min-width: 1220px) {
+		width: 50%;
+		max-width: 50rem;
 	}
 }
 
