@@ -16,6 +16,7 @@
 	margin-bottom: 1rem;
 	background-color: var(--background-c);
 	margin-top: 5rem;
+	margin:5rem;
 
 
 	@media all and (min-width: 450px) and (max-width: 767px) {

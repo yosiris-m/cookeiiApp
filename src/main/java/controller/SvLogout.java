@@ -50,34 +50,4 @@ public class SvLogout extends HttpServlet {
 
 		response.sendRedirect("index.html");
 	}
-	
-	
-	/** 
-     * Este método es llamado mediante solicitudes HTTP POST. Obtiene los parámetros `email` y `password`
-     * desde el formulario HTML y utiliza el servicio `UserService` para actualizar la contraseña.
-     * del usuario en la base de datos y redirige a la página de inicio de sesión.
-     * 
-     * @param request contiene la solicitud que el cliente ha hecho al servlet.
-     * @param response contiene la respuesta que el servlet envía al cliente.
-     * @throws ServletException si la solicitud no puede ser manejada.
-     * @throws IOException si ocurre un error de entrada o salida.
-	 */
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		String email = request.getParameter("email");
-		String password = request.getParameter("password");
-
-		try {
-			userService.updateUser(email, password);
-			System.out.println("actualizado" + password);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		// Redirigir a la página HTML
-		response.sendRedirect("login.html");
-	}
 }

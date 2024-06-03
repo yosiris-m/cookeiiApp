@@ -7,7 +7,7 @@ function detail(detailCook) {
 	const detailCard = document.getElementById("detail-l");
 	detailCook.state === "remision" ? detailCook.state = "Remisión" : null;
 	detailCook.state === "brote leve moderado" ? detailCook.state = "Brote leve-moderado" : null;
-	detailCook.state === "brote leve moderado" ? detailCook.state = "Brote moderado" : null;
+	detailCook.state === "brote moderado" ? detailCook.state = "Brote moderado" : null;
 	detailCook.state === "brote" ? detailCook.state = "Brote" : null;
 
 	const liCard = document.createElement("section");
